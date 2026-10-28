@@ -1,0 +1,3918 @@
+<!-- v1.12 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片混淆工具</title>
+<style>
+/* =====================================================================
+   Material 3 Expressive
+   ===================================================================== */
+:root {
+    color-scheme: light;
+    interpolate-size: allow-keywords;
+
+    /* Primary */
+    --md-primary: #5B4A9D;
+    --md-on-primary: #FFFFFF;
+    --md-primary-container: #E8DEFF;
+    --md-on-primary-container: #1C0B55;
+
+    /* Secondary */
+    --md-secondary: #5F5A70;
+    --md-on-secondary: #FFFFFF;
+    --md-secondary-container: #E7E0F3;
+    --md-on-secondary-container: #1C1728;
+
+    /* Tertiary */
+    --md-tertiary: #7A5600;
+    --md-on-tertiary: #FFFFFF;
+    --md-tertiary-container: #FFDEA6;
+    --md-on-tertiary-container: #281800;
+
+    /* Error / success */
+    --md-error: #B3261E;
+    --md-on-error: #FFFFFF;
+    --md-error-container: #F9DEDC;
+    --md-on-error-container: #410E0B;
+    --md-success: #2E6B4F;
+
+    /* Surface */
+    --md-surface: #FDF8FF;
+    --md-surface-container-lowest: #FFFFFF;
+    --md-surface-container-low: #F7F2FA;
+    --md-surface-container: #F3EDF7;
+    --md-surface-container-high: #ECE6F0;
+    --md-surface-container-highest: #E6E0E9;
+    --md-on-surface: #1D1B20;
+    --md-on-surface-variant: #49454F;
+    --md-outline: #79747E;
+    --md-outline-variant: #CAC4D0;
+    --md-inverse-surface: #322F35;
+    --md-inverse-on-surface: #F5EFF7;
+
+    /* Shape scale */
+    --shape-xs: 8px;
+    --shape-sm: 12px;
+    --shape-md: 16px;
+    --shape-lg: 24px;
+    --shape-xl: 28px;
+    --shape-full: 999px;
+
+    /* Motion */
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-spring: cubic-bezier(0.34, 1.32, 0.64, 1);
+
+    /* 统一按钮令牌 */
+    --btn-text: #5B4A9D;
+    --btn-text-hover: #3E2F78;
+    --btn-border: #CAC4D0;
+    --btn-fill-hover: #E8DEFF;
+
+    /* Icon masks */
+    --icon-grid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235B4A9D'%3E%3Cpath d='M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z'/%3E%3C/svg%3E");
+    --icon-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235B4A9D'%3E%3Cpath d='M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z'/%3E%3C/svg%3E");
+    --icon-lock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 10 0v2zm-6-4a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3'/%3E%3C/svg%3E");
+    --icon-unlock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h2c0-1.66 1.34-3 3-3s3 1.34 3 3v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2m0 12H6V10h12z'/%3E%3C/svg%3E");
+    --icon-restore: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.95 8.95 0 0 0 13 21a9 9 0 0 0 0-18m-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8z'/%3E%3C/svg%3E");
+    --icon-download: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 9h-4V3H9v6H5l7 7zM5 18v2h14v-2z'/%3E%3C/svg%3E");
+    --icon-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3'/%3E%3C/svg%3E");
+    --icon-trash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z'/%3E%3C/svg%3E");
+    --icon-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+    --icon-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z'/%3E%3C/svg%3E");
+    --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2379747E'%3E%3Cpath d='M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z'/%3E%3C/svg%3E");
+    --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: clamp(24px, 5vw, 52px) clamp(16px, 4vw, 40px) 64px;
+    background-color: var(--md-surface);
+    background-image:
+        radial-gradient(1000px 720px at 6% -10%, rgba(91, 74, 157, .10), transparent 62%),
+        radial-gradient(880px 620px at 102% 3%, rgba(122, 86, 0, .06), transparent 58%);
+    background-attachment: fixed;
+    color: var(--md-on-surface);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: clip;
+    font-family: "Segoe UI Variable", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+                 "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    background: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+}
+
+button, input, select, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+img { display: block; }
+
+/* ---------- 布局骨架 ---------- */
+.content { width: 100%; max-width: 560px; }
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stage,
+.controls,
+#single-panel { display: contents; }
+
+.file-selector    { order: 1; }
+.image-container  { order: 2; }
+.action-buttons   { order: 3; }
+.secondary-actions{ order: 4; }
+.batch-panel      { order: 5; }
+.format-options   { order: 6; }
+.settings-options { order: 7; }
+
+.batch-mode .image-container { display: none; }
+
+.app-header { margin-bottom: 28px; }
+
+.app-header::before {
+    content: "IMAGE OBFUSCATION";
+    display: block;
+    margin-bottom: 10px;
+    color: var(--md-primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .24em;
+    line-height: 1.2;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--md-on-surface);
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.035em;
+    text-wrap: balance;
+}
+
+h1::before {
+    content: "";
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    border-radius: var(--shape-md);
+    background-color: var(--md-primary-container);
+    background-image: var(--icon-grid);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 27px 27px;
+    box-shadow:
+        inset 0 0 0 1px rgba(91, 74, 157, .18),
+        0 8px 18px -14px rgba(91, 74, 157, .8);
+}
+
+/* =====================================================================
+   通用卡片表面
+   ===================================================================== */
+.file-selector,
+.format-options,
+.settings-options,
+.batch-panel,
+.image-container {
+    background-color: var(--md-surface-container-lowest);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--shape-lg);
+    box-shadow:
+        0 1px 2px rgba(29, 27, 32, .04),
+        0 18px 36px -32px rgba(29, 27, 32, .5);
+}
+
+/* =====================================================================
+   文件选择
+   ===================================================================== */
+.file-selector {
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background-image:
+        radial-gradient(190px 170px at 100% -20%, rgba(232, 222, 255, .85), transparent 72%),
+        radial-gradient(170px 150px at 0% 125%, rgba(255, 222, 166, .34), transparent 72%);
+}
+
+.file-button {
+    position: relative;
+    width: 100%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--shape-full);
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 10px 22px -12px rgba(91, 74, 157, .72);
+    transition:
+        transform .26s var(--ease-spring),
+        box-shadow .26s var(--ease-standard),
+        background-color .2s var(--ease-standard);
+}
+
+.file-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(255, 255, 255, .18), transparent 58%);
+    opacity: .65;
+    pointer-events: none;
+    transition: opacity .3s var(--ease-standard);
+}
+
+.file-button:active { transform: scale(.985); }
+
+.file-button span {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    line-height: 1;
+}
+
+.file-button span::before {
+    content: "";
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    background-color: currentColor;
+    -webkit-mask-image: var(--icon-image);
+    mask-image: var(--icon-image);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 22px 22px;
+    mask-size: 22px 22px;
+}
+
+.ipt_btn {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.ipt_btn:focus-visible { outline: none; }
+
+.file-button:has(.ipt_btn:focus-visible) {
+    outline: 3px solid rgba(91, 74, 157, .38);
+    outline-offset: 3px;
+}
+
+.file-hint {
+    margin-top: 14px;
+    color: var(--md-on-surface-variant);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.7;
+    text-align: center;
+}
+
+/* =====================================================================
+   预览区
+   ===================================================================== */
+.image-container {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    overflow: hidden;
+    border-radius: var(--shape-xl);
+    background-color: var(--md-surface-container-low);
+    background-image:
+        linear-gradient(45deg, rgba(91, 74, 157, .045) 25%, transparent 25%, transparent 75%, rgba(91, 74, 157, .045) 75%),
+        linear-gradient(45deg, rgba(91, 74, 157, .045) 25%, transparent 25%, transparent 75%, rgba(91, 74, 157, .045) 75%);
+    background-size: 22px 22px;
+    background-position: 0 0, 11px 11px;
+}
+
+#display-img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+    object-fit: contain;
+    border-radius: calc(var(--shape-xl) - 12px);
+}
+
+.image-container::before {
+    content: "";
+    width: 76px;
+    height: 76px;
+    flex: 0 0 76px;
+    border-radius: 26px;
+    background-color: var(--md-surface-container-lowest);
+    background-image: var(--icon-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 34px 34px;
+    box-shadow:
+        inset 0 0 0 1px var(--md-outline-variant),
+        0 14px 28px -22px rgba(29, 27, 32, .8);
+}
+
+.image-container::after {
+    content: "尚未选择图片 · 支持 PNG / JPG / WebP / GIF / BMP";
+    max-width: 280px;
+    color: var(--md-on-surface-variant);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.65;
+    text-align: center;
+}
+
+.image-container:has(#display-img[src])::before,
+.image-container:has(#display-img[src])::after { display: none; }
+
+/* =====================================================================
+   按钮体系 —— 统一：透明背景 + 紫色文字 + 灰色描边
+   hover / active：淡紫容器填充、深紫文字、边框消失
+   ===================================================================== */
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.action-button-row { display: contents; }
+
+.secondary-actions {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 10px;
+}
+
+.secondary-actions:not(:has(.action-button[style*="display: flex"])) {
+    display: none;
+}
+
+.action-button {
+    position: relative;
+    height: 52px;
+    min-width: 0;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--shape-full);
+    background-color: transparent;
+    color: var(--btn-text);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: .01em;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        transform .24s var(--ease-spring),
+        background-color .2s var(--ease-standard),
+        border-color .2s var(--ease-standard),
+        color .2s var(--ease-standard),
+        box-shadow .24s var(--ease-standard);
+}
+
+.action-button::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    background-color: currentColor;
+    -webkit-mask-image: var(--icon, var(--icon-grid));
+    mask-image: var(--icon, var(--icon-grid));
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 18px 18px;
+    mask-size: 18px 18px;
+    opacity: .92;
+    transition: transform .24s var(--ease-spring);
+}
+
+.action-button:active:not(.disabled):not(:disabled) {
+    transform: scale(.97);
+    box-shadow: none;
+    background-color: var(--btn-fill-hover);
+    color: var(--btn-text-hover);
+    border-color: transparent;
+}
+
+.action-button.disabled,
+.action-button:disabled {
+    opacity: .42;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none;
+    filter: saturate(.72);
+}
+
+/* —— 各按钮图标 —— */
+#enc-multiple,
+#batch-encrypt { --icon: var(--icon-lock); }
+
+#dec-multiple,
+#batch-decrypt { --icon: var(--icon-unlock); }
+
+#re {
+    --icon: var(--icon-restore);
+    display: none;
+    grid-column: 1 / -1;
+}
+
+#download {
+    --icon: var(--icon-download);
+    display: none;
+}
+
+#view { --icon: var(--icon-eye); display: none; }
+
+#clear { --icon: var(--icon-trash); display: none; }
+
+#batch-download {
+    --icon: var(--icon-download);
+    grid-column: 1 / -1;
+}
+
+#batch-cancel {
+    --icon: var(--icon-close);
+    display: none;
+}
+#batch-cancel.visible {
+    display: flex;
+    grid-column: 1 / -1;
+}
+
+.secondary-actions .action-button {
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+/* =====================================================================
+   批量面板
+   ===================================================================== */
+.batch-panel {
+    display: none;
+    padding: 20px;
+    text-align: left;
+}
+.batch-panel.visible { display: block; }
+
+.batch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.batch-title {
+    min-width: 0;
+    color: var(--md-on-surface);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+.mini-button {
+    height: 36px;
+    flex-shrink: 0;
+    padding: 0 16px;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--shape-full);
+    background-color: transparent;
+    color: var(--btn-text);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform .2s var(--ease-spring),
+        background-color .2s var(--ease-standard),
+        border-color .2s var(--ease-standard),
+        color .2s var(--ease-standard);
+}
+.mini-button:active:not(.disabled) {
+    transform: scale(.95);
+    background-color: var(--btn-fill-hover);
+    color: var(--btn-text-hover);
+    border-color: transparent;
+}
+.mini-button.disabled { opacity: .4; cursor: not-allowed; }
+
+.batch-progress { display: none; margin-bottom: 16px; }
+.batch-progress.visible { display: block; }
+
+.batch-progress-bar {
+    height: 10px;
+    overflow: hidden;
+    border-radius: var(--shape-full);
+    background-color: var(--md-surface-container-high);
+}
+
+.batch-progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--md-primary);
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, .18), transparent 72%);
+    transition: width .36s var(--ease-spring);
+}
+
+.batch-progress-text {
+    margin-top: 8px;
+    overflow: hidden;
+    color: var(--md-on-surface-variant);
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.batch-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 340px;
+    margin-bottom: 16px;
+    padding-right: 4px;
+    overflow-y: auto;
+}
+.batch-list:empty { display: none; }
+
+.batch-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--shape-md);
+    background-color: var(--md-surface-container-low);
+    transition: background-color .2s var(--ease-standard);
+}
+
+.batch-thumb {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: var(--shape-sm);
+    object-fit: cover;
+    background-color: var(--md-surface-container-high);
+    box-shadow: inset 0 0 0 1px rgba(29, 27, 32, .06);
+}
+
+.batch-info { flex: 1; min-width: 0; }
+
+.batch-name {
+    overflow: hidden;
+    color: var(--md-on-surface);
+    font-size: 13.5px;
+    font-weight: 650;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.batch-meta {
+    margin-top: 4px;
+    color: var(--md-on-surface-variant);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.batch-status { font-weight: 600; white-space: nowrap; }
+.batch-status::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 5px;
+    vertical-align: 1px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+.batch-status.pending    { color: var(--md-on-surface-variant); }
+.batch-status.processing { color: var(--md-primary); }
+.batch-status.processing::before { animation: pulse-dot 1.1s ease-in-out infinite; }
+.batch-status.done       { color: var(--md-success); }
+.batch-status.error      { color: var(--md-error); }
+
+.batch-item-actions { display: flex; flex-shrink: 0; gap: 6px; }
+.batch-item-actions .mini-button { height: 32px; padding: 0 12px; font-size: 12px; }
+
+.batch-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+.batch-actions .action-button {
+    height: 46px;
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+/* =====================================================================
+   输出格式 / 质量
+   ===================================================================== */
+.format-options {
+    padding: 20px;
+    text-align: left;
+}
+
+.format-options > label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--md-on-surface);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+/* ---------- 自绘下拉选择器 ---------- */
+.format-select-wrap {
+    position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+/* 原生 select 保留在 DOM 中作为数据源，仅做无障碍隐藏 */
+.select-native {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    border: 0;
+    white-space: nowrap;
+}
+
+.select-trigger {
+    position: relative;
+    width: 100%;
+    height: 52px;
+    padding: 0 46px 0 16px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--shape-md);
+    background-color: transparent;
+    color: var(--btn-text);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 550;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    transition:
+        border-color .2s var(--ease-standard),
+        background-color .2s var(--ease-standard),
+        color .2s var(--ease-standard),
+        box-shadow .2s var(--ease-standard);
+}
+
+.select-trigger .select-value {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.select-trigger::after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    width: 19px;
+    height: 19px;
+    margin-top: -9.5px;
+    background-color: var(--md-on-surface-variant);
+    -webkit-mask-image: var(--icon-chevron);
+    mask-image: var(--icon-chevron);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 19px 19px;
+    mask-size: 19px 19px;
+    pointer-events: none;
+    transition:
+        transform .3s var(--ease-spring),
+        background-color .2s var(--ease-standard);
+}
+
+.format-select-wrap.open .select-trigger {
+    background-color: var(--btn-fill-hover);
+    border-color: transparent;
+    color: var(--btn-text-hover);
+}
+
+.format-select-wrap.open .select-trigger::after {
+    transform: rotate(180deg);
+    background-color: var(--btn-text-hover);
+}
+
+.select-trigger:focus-visible {
+    outline: 3px solid rgba(91, 74, 157, .38);
+    outline-offset: 3px;
+}
+
+/* 下拉菜单 */
+.select-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px;
+    list-style: none;
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--shape-md);
+    background-color: var(--md-surface-container-lowest);
+    box-shadow:
+        0 1px 2px rgba(29, 27, 32, .06),
+        0 22px 44px -26px rgba(29, 27, 32, .66);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px) scale(.98);
+    transform-origin: top center;
+    transition:
+        opacity .18s var(--ease-standard),
+        transform .24s var(--ease-spring),
+        visibility .18s var(--ease-standard);
+}
+
+.format-select-wrap.open .select-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.select-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 12px;
+    border-radius: 10px;
+    color: var(--md-on-surface);
+    font-size: 15px;
+    font-weight: 550;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background-color .16s var(--ease-standard),
+        color .16s var(--ease-standard);
+}
+
+.select-option .select-option-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.select-option .select-check {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    background-color: var(--md-primary);
+    -webkit-mask-image: var(--icon-check);
+    mask-image: var(--icon-check);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 18px 18px;
+    mask-size: 18px 18px;
+    opacity: 0;
+    transform: scale(.55);
+    transition:
+        opacity .16s var(--ease-standard),
+        transform .22s var(--ease-spring),
+        background-color .16s var(--ease-standard);
+}
+
+.select-option.selected .select-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.select-option.selected {
+    color: var(--btn-text);
+    font-weight: 700;
+}
+
+.select-option.active,
+.select-option:hover {
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+}
+
+.select-option.active .select-check,
+.select-option:hover .select-check {
+    background-color: var(--md-on-primary-container);
+}
+
+/* ---------- 质量 ---------- */
+.quality-option {
+    display: none;
+    padding: 16px;
+    border: 1px solid var(--md-outline-variant);
+    border-radius: 18px;
+    background-color: var(--md-surface-container-low);
+}
+
+.quality-label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--md-on-surface-variant);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.quality-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#quality-range {
+    flex: 1;
+    max-width: none;
+    height: 32px;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    --range-progress: 95%;
+}
+#quality-range:disabled { opacity: .55; cursor: not-allowed; }
+
+#quality-range::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: var(--shape-full);
+    background: linear-gradient(
+        to right,
+        var(--md-primary) 0%,
+        var(--md-primary) var(--range-progress),
+        var(--md-surface-container-highest) var(--range-progress),
+        var(--md-surface-container-highest) 100%
+    );
+}
+
+#quality-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-top: -7px;
+    border: 3px solid var(--md-surface-container-lowest);
+    border-radius: 50%;
+    background-color: var(--md-primary);
+    box-shadow: 0 1px 4px rgba(29, 27, 32, .28);
+    cursor: grab;
+    transition: box-shadow .2s var(--ease-standard), transform .2s var(--ease-spring);
+}
+#quality-range:active::-webkit-slider-thumb { transform: scale(1.08); cursor: grabbing; }
+
+#quality-range::-moz-range-track {
+    height: 8px;
+    border-radius: var(--shape-full);
+    background-color: var(--md-surface-container-highest);
+}
+#quality-range::-moz-range-progress {
+    height: 8px;
+    border-radius: var(--shape-full);
+    background-color: var(--md-primary);
+}
+#quality-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 3px solid var(--md-surface-container-lowest);
+    border-radius: 50%;
+    background-color: var(--md-primary);
+    box-shadow: 0 1px 4px rgba(29, 27, 32, .28);
+    cursor: grab;
+}
+
+#quality-range:focus-visible {
+    outline: 3px solid rgba(91, 74, 157, .32);
+    outline-offset: 4px;
+    border-radius: var(--shape-full);
+}
+
+#quality-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 54px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: var(--shape-full);
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    font-size: 14px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================================
+   设置
+   ===================================================================== */
+.settings-options {
+    padding: 0 20px;
+    text-align: left;
+}
+.settings-options[open] { padding-bottom: 20px; }
+
+.settings-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+    color: var(--md-on-surface);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+.settings-summary::-webkit-details-marker { display: none; }
+
+.settings-summary::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    background-color: var(--md-primary);
+    -webkit-mask-image: var(--icon-settings);
+    mask-image: var(--icon-settings);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 20px 20px;
+    mask-size: 20px 20px;
+}
+
+.settings-summary::after,
+.sub-summary::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-right: 2px;
+    border-right: 2px solid var(--md-on-surface-variant);
+    border-bottom: 2px solid var(--md-on-surface-variant);
+    border-radius: 1px;
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform .3s var(--ease-spring);
+}
+
+.settings-options[open] > .settings-summary::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+}
+
+@supports (interpolate-size: allow-keywords) {
+    .settings-options::details-content,
+    .sub-settings::details-content {
+        block-size: 0;
+        overflow: hidden;
+        content-visibility: hidden;
+        transition:
+            block-size .3s var(--ease-standard),
+            content-visibility .3s allow-discrete;
+    }
+
+    .settings-options[open]::details-content,
+    .sub-settings[open]::details-content {
+        block-size: auto;
+        content-visibility: visible;
+    }
+}
+
+.settings-content {
+    padding-top: 4px;
+    border-top: 1px solid var(--md-outline-variant);
+}
+
+.sub-settings {
+    margin-bottom: 10px;
+    padding: 0 16px;
+    border: 1px solid var(--md-outline-variant);
+    border-radius: 18px;
+    background-color: var(--md-surface-container-low);
+}
+.sub-settings:last-child { margin-bottom: 0; }
+.sub-settings[open] { padding-bottom: 16px; background-color: var(--md-surface-container); }
+
+.sub-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    color: var(--md-on-surface);
+    font-size: 14px;
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+.sub-summary::-webkit-details-marker { display: none; }
+
+.sub-summary::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background-color: var(--md-tertiary);
+}
+
+.sub-summary::after {
+    width: 8px;
+    height: 8px;
+}
+
+.sub-settings[open] > .sub-summary::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+}
+
+.sub-content { padding-top: 6px; }
+
+.setting-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 9px 0;
+}
+
+.setting-item label {
+    flex: 1;
+    padding-top: 1px;
+    color: var(--md-on-surface);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.setting-checkbox {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    display: grid;
+    place-content: center;
+    border: 2px solid var(--md-outline);
+    border-radius: 6px;
+    background-color: var(--md-surface-container-lowest);
+    cursor: pointer;
+    transition:
+        background-color .2s var(--ease-standard),
+        border-color .2s var(--ease-standard),
+        box-shadow .2s var(--ease-standard);
+}
+
+.setting-checkbox::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid var(--md-on-primary);
+    border-bottom: 2px solid var(--md-on-primary);
+    transform: translate(-50%, -50%) translateY(-2px) rotate(-45deg) scale(0);
+    transform-origin: center;
+    transition: transform .22s var(--ease-spring);
+}
+
+.setting-checkbox:checked {
+    border-color: var(--md-primary);
+    background-color: var(--md-primary);
+}
+.setting-checkbox:checked::before {
+    transform: translate(-50%, -50%) translateY(-1.5px) rotate(-45deg) scale(1);
+}
+
+.strength-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.strength-label {
+    color: var(--md-on-surface-variant);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.encrypt-strength-buttons,
+.decrypt-strength-buttons {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.encrypt-strength-button,
+.decrypt-strength-button {
+    min-width: 0;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--shape-full);
+    background-color: transparent;
+    color: var(--btn-text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition:
+        transform .22s var(--ease-spring),
+        background-color .2s var(--ease-standard),
+        border-color .2s var(--ease-standard),
+        color .2s var(--ease-standard);
+}
+.encrypt-strength-button:active,
+.decrypt-strength-button:active { transform: scale(.95); }
+
+.encrypt-strength-button.selected,
+.decrypt-strength-button.selected {
+    border-color: transparent;
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    box-shadow: none;
+}
+
+/* =====================================================================
+   加载动画
+   ===================================================================== */
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: max-content;
+    height: max-content;
+    max-width: calc(100vw - 32px);
+    margin: auto;
+    padding: 16px 22px;
+    display: none;
+    border-radius: var(--shape-xl);
+    background-color: var(--md-surface-container-highest);
+    text-align: center;
+    box-shadow:
+        0 24px 52px -22px rgba(29, 27, 32, .7),
+        0 0 0 100vmax rgba(29, 27, 32, .16);
+    pointer-events: none;
+}
+
+.loader::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 10px;
+    border: 3px solid var(--md-surface-container-high);
+    border-top-color: var(--md-primary);
+    border-radius: 50%;
+    animation: spin .9s linear infinite;
+}
+
+.loader::after {
+    content: "处理中…";
+    display: block;
+    color: var(--md-on-surface-variant);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =====================================================================
+   错误窗口
+   ===================================================================== */
+.error-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    padding: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(29, 27, 32, .42);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.error-window {
+    width: min(720px, 100%);
+    max-height: min(82vh, 760px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .55);
+    border-radius: var(--shape-xl);
+    background-color: var(--md-surface-container-lowest);
+    box-shadow:
+        0 36px 90px -36px rgba(29, 27, 32, .72),
+        0 2px 8px rgba(29, 27, 32, .08);
+    animation: dialog-in .32s var(--ease-spring) both;
+}
+@keyframes dialog-in {
+    from { opacity: 0; transform: translateY(14px) scale(.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.error-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px 16px 24px;
+    background-color: var(--md-error-container);
+    color: var(--md-on-error-container);
+}
+
+.error-title {
+    color: var(--md-on-error-container);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+}
+
+.error-close {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--md-on-error-container);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        transform .2s var(--ease-spring),
+        background-color .2s var(--ease-standard);
+}
+.error-close:active { transform: scale(.92); }
+
+.error-content {
+    flex: 1;
+    margin: 20px 24px 0;
+    padding: 16px;
+    overflow-y: auto;
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--shape-md);
+    background-color: var(--md-surface-container-low);
+    color: var(--md-on-surface-variant);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-all;
+    text-align: left;
+}
+
+.error-controls {
+    padding: 16px 24px 24px;
+    border: 0;
+    background-color: transparent;
+}
+
+.error-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.error-ok-button {
+    min-height: 46px;
+    padding: 0 26px;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--shape-full);
+    background-color: transparent;
+    color: var(--btn-text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform .24s var(--ease-spring),
+        background-color .2s var(--ease-standard),
+        border-color .2s var(--ease-standard),
+        color .2s var(--ease-standard);
+}
+.error-ok-button:active { transform: scale(.96); }
+
+/* ---------- 拖放提示 ---------- */
+.drop-overlay {
+    position: fixed;
+    inset: 16px;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--md-primary);
+    border-radius: var(--shape-xl);
+    background-color: rgba(253, 248, 255, .72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity .22s var(--ease-standard),
+        visibility .22s var(--ease-standard);
+}
+.drop-overlay.visible { opacity: 1; visibility: visible; }
+
+.drop-overlay-inner {
+    padding: 18px 30px;
+    border-radius: var(--shape-full);
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    box-shadow: 0 28px 56px -28px rgba(29, 27, 32, .62);
+    transform: translateY(10px) scale(.97);
+    transition: transform .32s var(--ease-spring);
+}
+.drop-overlay.visible .drop-overlay-inner { transform: translateY(0) scale(1); }
+
+/* ---------- 焦点可见性 ---------- */
+.action-button:focus-visible,
+.mini-button:focus-visible,
+.setting-checkbox:focus-visible,
+.encrypt-strength-button:focus-visible,
+.decrypt-strength-button:focus-visible,
+.error-ok-button:focus-visible,
+.error-close:focus-visible,
+summary:focus-visible {
+    outline: 3px solid rgba(91, 74, 157, .38);
+    outline-offset: 3px;
+}
+
+summary:focus-visible { border-radius: var(--shape-xs); }
+
+/* =====================================================================
+   悬停状态层
+   ===================================================================== */
+@media (hover: hover) and (pointer: fine) {
+    .file-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 30px -14px rgba(91, 74, 157, .8);
+    }
+    .file-button:hover::after { opacity: 1; }
+
+    .action-button:hover:not(.disabled):not(:disabled) {
+        transform: translateY(-1px);
+        background-color: var(--btn-fill-hover);
+        color: var(--btn-text-hover);
+        border-color: transparent;
+    }
+    .action-button:hover:not(.disabled):not(:disabled)::before { transform: scale(1.08); }
+
+    .mini-button:hover:not(.disabled) {
+        background-color: var(--btn-fill-hover);
+        border-color: transparent;
+        color: var(--btn-text-hover);
+    }
+
+    .batch-item:hover { background-color: var(--md-surface-container); }
+
+    .select-trigger:hover {
+        background-color: var(--btn-fill-hover);
+        border-color: transparent;
+        color: var(--btn-text-hover);
+    }
+    .select-trigger:hover::after { background-color: var(--btn-text-hover); }
+
+    #quality-range:hover::-webkit-slider-thumb {
+        box-shadow:
+            0 0 0 8px rgba(91, 74, 157, .14),
+            0 1px 4px rgba(29, 27, 32, .28);
+    }
+
+    .settings-summary:hover,
+    .sub-summary:hover { color: var(--md-primary); }
+
+    .encrypt-strength-button:hover:not(.selected),
+    .decrypt-strength-button:hover:not(.selected) {
+        background-color: var(--btn-fill-hover);
+        border-color: transparent;
+        color: var(--btn-text-hover);
+    }
+
+    .error-ok-button:hover {
+        background-color: var(--btn-fill-hover);
+        border-color: transparent;
+        color: var(--btn-text-hover);
+        transform: translateY(-1px);
+    }
+
+    .error-close:hover { background-color: rgba(65, 14, 11, .09); }
+}
+
+/* =====================================================================
+   响应式：手机
+   ===================================================================== */
+@media (max-width: 600px) {
+    body { padding: 24px 16px 48px; }
+
+    .app-header { margin-bottom: 24px; }
+    h1 { gap: 12px; font-size: 1.75rem; }
+    h1::before {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+        border-radius: 15px;
+        background-size: 24px 24px;
+    }
+
+    .workspace { gap: 16px; }
+
+    .file-selector,
+    .format-options,
+    .settings-options,
+    .batch-panel { padding: 18px; border-radius: 22px; }
+
+    .image-container { border-radius: var(--shape-lg); }
+
+    .file-button { height: 52px; }
+    .file-hint { font-size: 12.5px; }
+
+    .action-button { height: 48px; padding: 0 14px; font-size: 14px; }
+    .action-button::before { width: 16px; height: 16px; flex-basis: 16px; mask-size: 16px 16px; -webkit-mask-size: 16px 16px; }
+    .secondary-actions .action-button { padding: 0 8px; font-size: 13px; }
+
+    .select-trigger { height: 48px; }
+    .select-option { min-height: 44px; font-size: 14.5px; }
+
+    .settings-summary { padding: 18px 0; }
+
+    .batch-actions .action-button { height: 44px; font-size: 13px; }
+    .batch-list { max-height: 300px; }
+
+    .error-overlay { padding: 12px; }
+    .error-window { border-radius: 24px; max-height: 84vh; }
+    .error-header { padding: 14px 14px 14px 20px; }
+    .error-content { margin: 14px 16px 0; padding: 14px; font-size: 12px; }
+    .error-controls { padding: 14px 16px 18px; }
+    .error-buttons-container { justify-content: stretch; }
+    .error-ok-button { flex: 1; padding: 0 12px; }
+
+    .drop-overlay { inset: 10px; border-radius: 24px; }
+    .drop-overlay-inner { padding: 16px 22px; font-size: 14px; }
+}
+
+@media (max-width: 400px) {
+    h1 { font-size: 1.55rem; }
+    h1::before { width: 40px; height: 40px; flex-basis: 40px; border-radius: 14px; }
+    .app-header::before { font-size: 10px; letter-spacing: .2em; }
+
+    .action-buttons { gap: 8px; }
+    .action-button { padding: 0 10px; font-size: 13px; }
+    .secondary-actions .action-button::before { display: none; }
+    .secondary-actions .action-button { padding: 0 6px; }
+
+    .encrypt-strength-button,
+    .decrypt-strength-button { height: 36px; font-size: 12.5px; }
+    .quality-slider-container { gap: 12px; }
+    #quality-value { min-width: 48px; padding: 0 10px; }
+}
+
+/* =====================================================================
+   PC / 桌面端（≥900px）
+   ===================================================================== */
+@media (min-width: 900px) {
+    body { padding: 40px 40px 64px; }
+
+    .content {
+        max-width: 1240px;
+        padding: 0;
+    }
+
+    .app-header { margin-bottom: 24px; }
+    h1 { font-size: 2.45rem; }
+    h1::before {
+        width: 56px;
+        height: 56px;
+        flex-basis: 56px;
+        border-radius: 18px;
+        background-size: 29px 29px;
+    }
+
+    .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) clamp(360px, 28vw, 400px);
+        grid-template-areas: none;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .stage {
+        grid-column: 1;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 0;
+    }
+    body:not(.batch-mode) .stage { position: sticky; top: 24px; }
+
+    .controls {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    .image-container {
+        width: 100%;
+        max-width: none;
+        height: clamp(440px, calc(100vh - 240px), 720px);
+        aspect-ratio: auto;
+        margin: 0;
+        padding: 16px;
+        border-radius: 32px;
+    }
+    .image-container::before {
+        width: 88px;
+        height: 88px;
+        flex-basis: 88px;
+        border-radius: 30px;
+        background-size: 38px 38px;
+    }
+
+    .file-selector { padding: 24px; }
+    .file-button { height: 56px; }
+    .file-hint { margin-top: 12px; }
+
+    .action-buttons { gap: 10px; }
+
+    .format-options,
+    .settings-options,
+    .batch-panel { padding-left: 22px; padding-right: 22px; }
+
+    .batch-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        max-height: clamp(360px, calc(100vh - 380px), 680px);
+    }
+    .batch-list:empty { display: none; }
+    .batch-item { background-color: var(--md-surface-container-lowest); }
+    .batch-actions .action-button { font-size: 14px; }
+}
+
+/* =====================================================================
+   动效偏好
+   ===================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+    .app-header { animation: fade-up .48s var(--ease-standard) both; }
+    .file-selector { animation: fade-up .52s .04s var(--ease-standard) both; }
+    @keyframes fade-up {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: .35; transform: scale(.72); }
+}
+</style>
+</head>
+<body>
+
+<div class="error-overlay" id="error-overlay">
+    <div class="error-window">
+        <div class="error-header">
+            <div class="error-title" id="error-title">错误信息</div>
+            <button class="error-close" id="error-close">&times;</button>
+        </div>
+        <div class="error-content" id="error-content"></div>
+        <div class="error-controls">
+            <div class="error-buttons-container">
+                <button class="error-ok-button" id="error-ok">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loader" id="loader"></div>
+
+<div class="drop-overlay" id="drop-overlay">
+    <div class="drop-overlay-inner">松开鼠标，添加图片</div>
+</div>
+
+<div class="content">
+    <div class="app-header">
+        <h1>图片混淆工具</h1>
+    </div>
+
+    <div class="workspace">
+        <!-- 左侧：预览区（批量模式下替换为批量面板） -->
+        <div class="stage">
+            <div class="image-container">
+                <img id="display-img" alt="">
+            </div>
+
+            <div class="batch-panel" id="batch-panel">
+                <div class="batch-header">
+                    <span class="batch-title" id="batch-count">共 0 个文件</span>
+                    <button class="mini-button" id="batch-clear">清空列表</button>
+                </div>
+
+                <div class="batch-progress" id="batch-progress">
+                    <div class="batch-progress-bar">
+                        <div class="batch-progress-fill" id="batch-progress-fill"></div>
+                    </div>
+                    <div class="batch-progress-text" id="batch-progress-text"></div>
+                </div>
+
+                <div class="batch-list" id="batch-list"></div>
+
+                <div class="batch-actions">
+                    <button id="batch-encrypt" class="action-button">批量混淆</button>
+                    <button id="batch-decrypt" class="action-button">批量解混淆</button>
+                    <button id="batch-download" class="action-button">打包下载</button>
+                    <button id="batch-cancel" class="action-button">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧：操作面板 -->
+        <div class="controls">
+            <div class="file-selector">
+                <div class="file-button">
+                    <span>选择图片</span>
+                    <input type="file" accept="image/*" id="ipt" class="ipt_btn" multiple>
+                </div>
+                <div class="file-hint">选择 1 张进入单图模式，选择多张进入批量模式</div>
+            </div>
+
+            <div id="single-panel">
+                <div class="action-buttons">
+                    <div class="action-button-row">
+                        <button id="enc-multiple" class="action-button">混淆图片</button>
+                        <button id="dec-multiple" class="action-button">解混淆</button>
+                    </div>
+                    <div class="action-button-row">
+                        <button id="re" class="action-button">还原原图</button>
+                    </div>
+                </div>
+
+                <div class="secondary-actions">
+                    <button id="download" class="action-button">下载图片</button>
+                    <button id="view" class="action-button">查看图片</button>
+                    <button id="clear" class="action-button">清除图片</button>
+                </div>
+            </div>
+
+            <div class="format-options">
+                <label for="format-trigger" id="format-label">输出格式:</label>
+
+                <div class="format-select-wrap" id="format-select-wrap">
+                    <!-- 原生 select 作为数据源与变更事件源，视觉上隐藏 -->
+                    <select id="format-select" class="select-native" tabindex="-1" aria-hidden="true">
+                        <option value="png" selected>PNG (无损)</option>
+                        <option value="jpg">JPG (有损)</option>
+                    </select>
+
+                    <!-- 自绘触发器 -->
+                    <button type="button" class="select-trigger" id="format-trigger"
+                            aria-haspopup="listbox" aria-expanded="false"
+                            aria-controls="format-menu"
+                            aria-labelledby="format-label format-trigger-value">
+                        <span class="select-value" id="format-trigger-value">PNG (无损)</span>
+                    </button>
+
+                    <!-- 自绘下拉菜单 -->
+                    <ul class="select-menu" id="format-menu" role="listbox" aria-labelledby="format-label">
+                        <li class="select-option selected" id="format-option-png" role="option"
+                            data-value="png" aria-selected="true">
+                            <span class="select-option-label">PNG (无损)</span>
+                            <span class="select-check" aria-hidden="true"></span>
+                        </li>
+                        <li class="select-option" id="format-option-jpg" role="option"
+                            data-value="jpg" aria-selected="false">
+                            <span class="select-option-label">JPG (有损)</span>
+                            <span class="select-check" aria-hidden="true"></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="quality-option" class="quality-option">
+                    <div class="quality-label">图片质量:</div>
+                    <div class="quality-slider-container">
+                        <input type="range" id="quality-range" min="10" max="100" value="95">
+                        <span id="quality-value">95</span>
+                    </div>
+                </div>
+            </div>
+
+            <details class="settings-options" id="settings-options">
+                <summary class="settings-summary">设置</summary>
+                <div class="settings-content">
+                    <details class="sub-settings">
+                        <summary class="sub-summary">混淆设置</summary>
+                        <div class="sub-content">
+                            <div class="setting-item">
+                                <input type="checkbox" id="enable-green" class="setting-checkbox">
+                                <label for="enable-green">绿图 (增强绿色80%)</label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="strength-button-group">
+                                    <div class="strength-label">混淆强度:</div>
+                                    <div class="encrypt-strength-buttons">
+                                        <button class="encrypt-strength-button" data-value="0.0">0.0</button>
+                                        <button class="encrypt-strength-button" data-value="0.5">0.5</button>
+                                        <button class="encrypt-strength-button selected" data-value="1.0">1.0</button>
+                                        <button class="encrypt-strength-button" data-value="1.5">1.5</button>
+                                        <button class="encrypt-strength-button" data-value="2.0">2.0</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="sub-settings">
+                        <summary class="sub-summary">解混淆设置</summary>
+                        <div class="sub-content">
+                            <div class="setting-item">
+                                <input type="checkbox" id="reduce-green" class="setting-checkbox">
+                                <label for="reduce-green">减弱绿色效果</label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="strength-button-group">
+                                    <div class="strength-label">解混淆强度:</div>
+                                    <div class="decrypt-strength-buttons">
+                                        <button class="decrypt-strength-button" data-value="0.0">0.0</button>
+                                        <button class="decrypt-strength-button" data-value="0.5">0.5</button>
+                                        <button class="decrypt-strength-button selected" data-value="1.0">1.0</button>
+                                        <button class="decrypt-strength-button" data-value="1.5">1.5</button>
+                                        <button class="decrypt-strength-button" data-value="2.0">2.0</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </details>
+        </div>
+    </div>
+</div>
+
+<script>
+'use strict';
+
+/* =========================================================================
+ * 常量
+ * ========================================================================= */
+const GOLDEN = (Math.sqrt(5) - 1) / 2;
+const SLICE_BUDGET_MS = 12;
+const SLICE_MIN_PIXELS = 16384;
+const MAX_STACK_LINES = 8;
+
+const MAGIC_HEADER_SIZE = 512;
+const MAX_FILE_SIZE = 200 * 1024 * 1024;
+const MAX_IMAGE_SIDE = 16384;
+const MAX_IMAGE_PIXELS = 33554432;
+
+const MAX_BATCH_FILES = 50;
+
+/* =========================================================================
+ * DOM 引用
+ * ========================================================================= */
+const $ = (id) => document.getElementById(id);
+
+const img            = $('display-img');
+const loader         = $('loader');
+const encBtn         = $('enc-multiple');
+const decBtn         = $('dec-multiple');
+const restoreBtn     = $('re');
+const clearBtn       = $('clear');
+const downloadBtn    = $('download');
+const viewBtn        = $('view');
+const formatSelect   = $('format-select');
+const qualityOption  = $('quality-option');
+const qualityRange   = $('quality-range');
+const qualityValue   = $('quality-value');
+
+const enableGreen    = $('enable-green');
+const reduceGreen    = $('reduce-green');
+
+const errorOverlay   = $('error-overlay');
+const errorContent   = $('error-content');
+const errorTitle     = $('error-title');
+const errorCloseBtn  = $('error-close');
+const errorOkBtn     = $('error-ok');
+
+const ipt            = $('ipt');
+const dropOverlay    = $('drop-overlay');
+
+const singlePanel    = $('single-panel');
+const batchPanel     = $('batch-panel');
+const batchListEl    = $('batch-list');
+const batchCountEl   = $('batch-count');
+const batchClearBtn  = $('batch-clear');
+const batchEncBtn    = $('batch-encrypt');
+const batchDecBtn    = $('batch-decrypt');
+const batchDlBtn     = $('batch-download');
+const batchCancelBtn = $('batch-cancel');
+const batchProgressEl   = $('batch-progress');
+const batchProgressFill = $('batch-progress-fill');
+const batchProgressText = $('batch-progress-text');
+
+/* =========================================================================
+ * 全局状态
+ * ========================================================================= */
+const state = {
+    isProcessing: false,
+    abortController: null,
+    currentBlobUrl: null,
+    hasImage: false,
+    hasEncrypted: false,
+    hasDecrypted: false,
+    fileName: '',
+    originalFile: null,
+    lastOutputFormat: '',
+    encryptStrength: 1.0,
+    decryptStrength: 1.0,
+
+    batchFiles: [],
+    batchProcessing: false,
+    batchMode: false,
+    batchSeq: 0
+};
+
+/* =========================================================================
+ * 工具函数
+ * ========================================================================= */
+const abortError = () => {
+    try { return new DOMException('操作已取消', 'AbortError'); }
+    catch { const e = new Error('操作已取消'); e.name = 'AbortError'; return e; }
+};
+
+const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
+const normalizeOffset = (v, total) => ((v % total) + total) % total;
+const shortSrc = (src, max = 120) =>
+    (typeof src === 'string' && src.length > max ? src.slice(0, max) + '…' : String(src));
+
+function formatBytes(bytes) {
+    if (!Number.isFinite(bytes)) return String(bytes);
+    if (bytes < 1024) return bytes + ' B';
+    const units = ['KB', 'MB', 'GB', 'TB'];
+    let v = bytes / 1024;
+    let i = 0;
+    while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
+    return v.toFixed(v >= 100 ? 0 : v >= 10 ? 1 : 2) + ' ' + units[i];
+}
+
+/* =========================================================================
+ * 错误提示
+ * ========================================================================= */
+function formatErrorDetail(err) {
+    if (err === null || err === undefined) return '';
+    if (typeof err === 'string') return err;
+
+    if (typeof err === 'object') {
+        const name = err.name ? String(err.name) : '';
+        const message = err.message !== undefined && err.message !== null
+            ? String(err.message) : '';
+        const lines = [];
+
+        if (name || message) {
+            lines.push(message ? `${name || 'Error'}: ${message}` : name);
+        }
+
+        if (err.stack) {
+            const stackLines = String(err.stack)
+                .split('\n')
+                .slice(1)
+                .map((l) => l.trim())
+                .filter(Boolean);
+            if (stackLines.length) {
+                lines.push('  堆栈:');
+                for (const line of stackLines.slice(0, MAX_STACK_LINES)) {
+                    lines.push('    ' + line);
+                }
+                if (stackLines.length > MAX_STACK_LINES) {
+                    lines.push(`    …（省略 ${stackLines.length - MAX_STACK_LINES} 行）`);
+                }
+            }
+        }
+
+        if (err.code !== undefined && err.code !== null) {
+            lines.push(`  code: ${err.code}`);
+        }
+
+        if (err.cause !== undefined && err.cause !== null) {
+            const causeText = formatErrorDetail(err.cause).split('\n')[0];
+            if (causeText) lines.push(`  cause: ${causeText}`);
+        }
+
+        if (lines.length > 0) return lines.join('\n');
+
+        try { return JSON.stringify(err, null, 2); }
+        catch { return String(err); }
+    }
+
+    return String(err);
+}
+
+/**
+ * 记录并立即弹出错误窗口。不累积、不保存历史记录。
+ * @param {string|*} message
+ * @param {*} [err]
+ * @param {{popup?: boolean}} [opts] popup=false 时不弹窗（用于警告）
+ */
+function recordError(message, err, opts) {
+    let text;
+
+    if (typeof message === 'string') {
+        text = message;
+        const detail = formatErrorDetail(err);
+        if (detail) text += '\n' + detail;
+    } else {
+        text = formatErrorDetail(message);
+        if (!text) text = '(未知错误)';
+    }
+
+    if (err !== undefined && err !== null) {
+        console.error('[图片混淆工具]', text, err);
+    } else {
+        console.error('[图片混淆工具]', text);
+    }
+
+    const shouldPopup = !opts || opts.popup !== false;
+    if (shouldPopup) {
+        showErrorPopup(text);
+    }
+}
+
+function showErrorPopup(text) {
+    if (!errorOverlay || !errorContent) return;
+    if (errorTitle) errorTitle.textContent = '错误信息';
+    errorContent.textContent = text;
+    errorContent.scrollTop = 0;
+    errorOverlay.style.display = 'flex';
+}
+
+function closeErrorWindow() {
+    if (errorOverlay) errorOverlay.style.display = 'none';
+}
+
+/* =========================================================================
+ * 图片格式检查
+ * ========================================================================= */
+async function readFileHeader(file, byteCount = MAGIC_HEADER_SIZE) {
+    const slice = file.slice(0, byteCount);
+
+    if (typeof slice.arrayBuffer === 'function') {
+        try {
+            return new Uint8Array(await slice.arrayBuffer());
+        } catch { /* 回退到 FileReader */ }
+    }
+
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const buf = reader.result;
+                resolve(buf instanceof ArrayBuffer ? new Uint8Array(buf) : new Uint8Array(0));
+            } catch (e) {
+                reject(e);
+            }
+        };
+        reader.onerror = () => reject(reader.error || new Error('FileReader 读取失败'));
+        reader.readAsArrayBuffer(slice);
+    });
+}
+
+function detectImageFormat(bytes) {
+    const b = bytes;
+    const n = b.length;
+    if (n < 4) return null;
+
+    if (n >= 8 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4E && b[3] === 0x47 &&
+        b[4] === 0x0D && b[5] === 0x0A && b[6] === 0x1A && b[7] === 0x0A) {
+        return { format: 'png', label: 'PNG', mime: 'image/png', supported: true };
+    }
+
+    if (b[0] === 0xFF && b[1] === 0xD8 && b[2] === 0xFF) {
+        return { format: 'jpeg', label: 'JPEG', mime: 'image/jpeg', supported: true };
+    }
+
+    if (n >= 6 && b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x38 &&
+        (b[4] === 0x37 || b[4] === 0x39) && b[5] === 0x61) {
+        return { format: 'gif', label: 'GIF', mime: 'image/gif', supported: true };
+    }
+
+    if (b[0] === 0x42 && b[1] === 0x4D) {
+        return { format: 'bmp', label: 'BMP', mime: 'image/bmp', supported: true };
+    }
+
+    if (n >= 12 && b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 &&
+        b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) {
+        return { format: 'webp', label: 'WebP', mime: 'image/webp', supported: true };
+    }
+
+    if ((b[0] === 0x49 && b[1] === 0x49 && b[2] === 0x2A && b[3] === 0x00) ||
+        (b[0] === 0x4D && b[1] === 0x4D && b[2] === 0x00 && b[3] === 0x2A)) {
+        return {
+            format: 'tiff', label: 'TIFF', mime: 'image/tiff', supported: false,
+            reason: '主流浏览器 <img> 无法解码 TIFF 格式'
+        };
+    }
+
+    if (b[0] === 0x00 && b[1] === 0x00 && b[2] === 0x01 && b[3] === 0x00) {
+        return { format: 'ico', label: 'ICO', mime: 'image/x-icon', supported: true };
+    }
+
+    if (n >= 12 && b[4] === 0x66 && b[5] === 0x74 && b[6] === 0x79 && b[7] === 0x70) {
+        const brand = String.fromCharCode(b[8], b[9], b[10], b[11]).toLowerCase();
+        if (brand === 'avif' || brand === 'avis') {
+            return { format: 'avif', label: 'AVIF', mime: 'image/avif', supported: true };
+        }
+        if (brand === 'heic' || brand === 'heix' || brand === 'hevc' || brand === 'hevx' ||
+            brand === 'mif1' || brand === 'msf1') {
+            return {
+                format: 'heic', label: 'HEIC/HEIF', mime: 'image/heic', supported: false,
+                reason: '除 Safari 外多数浏览器 <img> 无法解码 HEIC/HEIF 格式'
+            };
+        }
+        return {
+            format: 'bmff', label: 'ISO BMFF', mime: 'application/octet-stream', supported: false,
+            reason: `ISO BMFF 容器（brand: ${brand || '未知'}）不是可解码的图片`
+        };
+    }
+
+    let off = 0;
+    if (n >= 3 && b[0] === 0xEF && b[1] === 0xBB && b[2] === 0xBF) off = 3;
+    if (n > off) {
+        const sampleLen = Math.min(n - off, 400);
+        let head = '';
+        for (let i = 0; i < sampleLen; i++) head += String.fromCharCode(b[off + i]);
+        const lower = head.toLowerCase();
+        if (lower.includes('<svg')) {
+            return { format: 'svg', label: 'SVG', mime: 'image/svg+xml', supported: true };
+        }
+    }
+
+    return null;
+}
+
+async function validateImageFile(file) {
+    const result = { fatal: false, message: '', error: null, warnings: [], format: null };
+
+    if (!file) {
+        result.fatal = true;
+        result.message = '未选择文件';
+        return result;
+    }
+
+    const sizeText = formatBytes(file.size);
+    const declaredMime = (file.type || '').toLowerCase();
+    const extMatch = /\.([a-z0-9]+)$/i.exec(file.name || '');
+    const declaredExt = extMatch ? extMatch[1].toLowerCase() : '';
+
+    if (file.size === 0) {
+        result.fatal = true;
+        result.message = `文件为空：${file.name}（0 字节）`;
+        return result;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+        result.fatal = true;
+        result.message =
+            `文件过大：${file.name}（${sizeText}），上限 ${formatBytes(MAX_FILE_SIZE)}`;
+        return result;
+    }
+
+    let header;
+    try {
+        header = await readFileHeader(file);
+    } catch (e) {
+        result.fatal = true;
+        result.message = `读取文件头失败：${file.name}（${sizeText}）`;
+        result.error = e;
+        return result;
+    }
+
+    if (!header || header.length < 4) {
+        result.fatal = true;
+        result.message = `文件内容过短（${header ? header.length : 0} 字节），无法识别格式：${file.name}`;
+        return result;
+    }
+
+    const detected = detectImageFormat(header);
+    result.format = detected;
+
+    if (!detected) {
+        if (declaredMime.startsWith('image/')) {
+            result.warnings.push(
+                `无法通过文件头识别图片格式：${file.name}（声明类型 ${declaredMime}）。` +
+                `将尝试交给浏览器解码；若失败请转换为 PNG / JPEG / WebP。`
+            );
+            return result;
+        }
+        result.fatal = true;
+        result.message =
+            `不支持的文件格式：${file.name}（声明类型 ${declaredMime || '未知'}，` +
+            `文件头未能识别为常见图片格式）`;
+        return result;
+    }
+
+    if (!detected.supported) {
+        result.fatal = true;
+        result.message =
+            `不支持的图片格式：${detected.label}（${file.name}）。` +
+            (detected.reason ? `原因：${detected.reason}。` : '') +
+            `请转换为 PNG / JPEG / WebP / GIF / BMP 后重试。`;
+        return result;
+    }
+
+    if (declaredMime && declaredMime !== detected.mime) {
+        const aliasOk =
+            (declaredMime === 'image/jpg' || declaredMime === 'image/pjpeg') && detected.mime === 'image/jpeg' ||
+            declaredMime === 'image/x-png' && detected.mime === 'image/png' ||
+            declaredMime === 'image/vnd.microsoft.icon' && detected.mime === 'image/x-icon';
+
+        if (!aliasOk) {
+            result.warnings.push(
+                `文件类型与内容不符：${file.name} 声明为 ${declaredMime}，` +
+                `但文件头实际为 ${detected.label}（${detected.mime}）。已按实际格式处理。`
+            );
+        }
+    }
+
+    if (declaredExt) {
+        const extAlias = {
+            jpg: 'jpeg', jpeg: 'jpeg', jpe: 'jpeg',
+            png: 'png', apng: 'png',
+            gif: 'gif',
+            bmp: 'bmp', dib: 'bmp',
+            webp: 'webp',
+            ico: 'ico', cur: 'ico',
+            svg: 'svg',
+            tif: 'tiff', tiff: 'tiff',
+            heic: 'heic', heif: 'heic',
+            avif: 'avif'
+        };
+        const extFormat = extAlias[declaredExt];
+        if (extFormat && extFormat !== detected.format) {
+            result.warnings.push(
+                `文件扩展名与内容不符：${file.name}（.${declaredExt}）` +
+                `实际为 ${detected.label} 数据。已按实际格式处理。`
+            );
+        }
+    }
+
+    return result;
+}
+
+/* =========================================================================
+ * Blob URL 生命周期
+ * ========================================================================= */
+function setCurrentBlobUrl(url) {
+    const prev = state.currentBlobUrl;
+    if (prev && prev !== url) {
+        try { URL.revokeObjectURL(prev); } catch { /* ignore */ }
+    }
+    state.currentBlobUrl = url;
+}
+
+function releaseCurrentBlobUrl() {
+    if (state.currentBlobUrl) {
+        try { URL.revokeObjectURL(state.currentBlobUrl); } catch { /* ignore */ }
+        state.currentBlobUrl = null;
+    }
+}
+
+/* =========================================================================
+ * 加载动画
+ * ========================================================================= */
+const showLoader = () => { if (loader) loader.style.display = 'block'; };
+const hideLoader = () => { if (loader) loader.style.display = 'none'; };
+
+/* =========================================================================
+ * 图片显示
+ * ========================================================================= */
+function setImageSrc(src) {
+    if (!img) return;
+
+    if (!src) {
+        img.onload = img.onerror = null;
+        img.removeAttribute('src');
+        img.style.display = 'none';
+        releaseCurrentBlobUrl();
+        return;
+    }
+
+    setCurrentBlobUrl(src);
+
+    img.onload = () => {
+        img.style.display = 'block';
+        hideLoader();
+    };
+    img.onerror = () => {
+        const sizeInfo = img.naturalWidth && img.naturalHeight
+            ? `（${img.naturalWidth}×${img.naturalHeight}）` : '';
+        recordError(
+            `图片加载失败${sizeInfo}：文件 ${state.fileName || '未知'}。` +
+            `可能是文件损坏、被截断，或浏览器不支持该格式。src=${shortSrc(src)}`
+        );
+        hideLoader();
+    };
+    img.src = src;
+}
+
+/* =========================================================================
+ * 按钮可用性 / 可见性（单图）
+ * ========================================================================= */
+const ALL_BUTTONS = [encBtn, decBtn, restoreBtn, clearBtn, downloadBtn, viewBtn];
+
+function setButtonsDisabled(disabled) {
+    for (const btn of ALL_BUTTONS) {
+        if (btn) btn.classList.toggle('disabled', disabled);
+    }
+    if (!disabled) updateTransformAvailability();
+}
+
+function hasUsableImage() {
+    return !!(state.hasImage && img && img.getAttribute('src'));
+}
+
+function updateTransformAvailability() {
+    const unavailable = !hasUsableImage();
+    for (const btn of [encBtn, decBtn]) {
+        if (!btn) continue;
+        btn.classList.toggle('disabled', unavailable);
+        btn.disabled = unavailable;
+    }
+}
+
+function updateDownloadButtonVisibility() {
+    if (!downloadBtn) return;
+    downloadBtn.style.display =
+        (state.hasImage && (state.hasEncrypted || state.hasDecrypted)) ? 'flex' : 'none';
+}
+
+function updateViewButtonVisibility() {
+    if (!viewBtn) return;
+    viewBtn.style.display =
+        (state.hasImage && (state.hasEncrypted || state.hasDecrypted)) ? 'flex' : 'none';
+}
+
+function showRestoreButton() {
+    if (restoreBtn) restoreBtn.style.display = 'flex';
+    updateDownloadButtonVisibility();
+    updateViewButtonVisibility();
+}
+
+function resetButtonStates() {
+    state.hasEncrypted = false;
+    state.hasDecrypted = false;
+
+    if (encBtn)     encBtn.style.display = 'flex';
+    if (decBtn)     decBtn.style.display = 'flex';
+    if (restoreBtn) restoreBtn.style.display = 'none';
+
+    updateDownloadButtonVisibility();
+    updateViewButtonVisibility();
+    setButtonsDisabled(false);
+}
+
+/* =========================================================================
+ * Gilbert 2D 曲线
+ * ========================================================================= */
+function buildGilbertCurve(width, height) {
+    const total = width * height;
+    const curve = new Int32Array(total);
+    let out = 0;
+
+    const stack = [];
+    const push = (x, y, ax, ay, bx, by) => stack.push(x, y, ax, ay, bx, by);
+
+    if (width >= height) push(0, 0, width, 0, 0, height);
+    else                 push(0, 0, 0, height, width, 0);
+
+    while (stack.length > 0) {
+        const by = stack.pop();
+        const bx = stack.pop();
+        const ay = stack.pop();
+        const ax = stack.pop();
+        const y  = stack.pop();
+        const x  = stack.pop();
+
+        const w = Math.abs(ax + ay);
+        const h = Math.abs(bx + by);
+
+        const dax = Math.sign(ax), day = Math.sign(ay);
+        const dbx = Math.sign(bx), dby = Math.sign(by);
+
+        if (h === 1) {
+            let cx = x, cy = y;
+            for (let i = 0; i < w; i++) {
+                curve[out++] = cx + cy * width;
+                cx += dax; cy += day;
+            }
+            continue;
+        }
+
+        if (w === 1) {
+            let cx = x, cy = y;
+            for (let i = 0; i < h; i++) {
+                curve[out++] = cx + cy * width;
+                cx += dbx; cy += dby;
+            }
+            continue;
+        }
+
+        let ax2 = Math.floor(ax / 2), ay2 = Math.floor(ay / 2);
+        let bx2 = Math.floor(bx / 2), by2 = Math.floor(by / 2);
+
+        const w2 = Math.abs(ax2 + ay2);
+        const h2 = Math.abs(bx2 + by2);
+
+        if (2 * w > 3 * h) {
+            if ((w2 % 2) && (w > 2)) { ax2 += dax; ay2 += day; }
+
+            push(x + ax2, y + ay2, ax - ax2, ay - ay2, bx, by);
+            push(x, y, ax2, ay2, bx, by);
+        } else {
+            if ((h2 % 2) && (h > 2)) { bx2 += dbx; by2 += dby; }
+
+            push(x + (ax - dax) + (bx2 - dbx),
+                 y + (ay - day) + (by2 - dby),
+                 -bx2, -by2, -(ax - ax2), -(ay - ay2));
+            push(x + bx2, y + by2, ax, ay, bx - bx2, by - by2);
+            push(x, y, bx2, by2, ax2, ay2);
+        }
+    }
+
+    return curve;
+}
+
+/* =========================================================================
+ * 分片执行器
+ * ========================================================================= */
+function runSlices(total, sliceFn, signal) {
+    return new Promise((resolve, reject) => {
+        let index = 0;
+
+        function step() {
+            if (signal && signal.aborted) { reject(abortError()); return; }
+
+            const start = performance.now();
+            try {
+                while (index < total) {
+                    const end = Math.min(index + SLICE_MIN_PIXELS, total);
+                    sliceFn(index, end);
+                    index = end;
+                    if (performance.now() - start >= SLICE_BUDGET_MS) break;
+                }
+            } catch (err) {
+                reject(err);
+                return;
+            }
+
+            if (index < total) setTimeout(step, 0);
+            else resolve();
+        }
+
+        step();
+    });
+}
+
+/* =========================================================================
+ * 像素置换
+ * ========================================================================= */
+function asUint32(data, length) {
+    if ((data.byteOffset & 3) !== 0 || (data.byteLength & 3) !== 0) return null;
+    try {
+        return new Uint32Array(data.buffer, data.byteOffset, length);
+    } catch {
+        return null;
+    }
+}
+
+async function permutePixels(srcData, dstData, curve, total, offset, isEncrypt, signal) {
+    const src32 = asUint32(srcData, total);
+    const dst32 = asUint32(dstData, total);
+
+    if (src32 && dst32) {
+        if (isEncrypt) {
+            await runSlices(total, (from, to) => {
+                for (let i = from; i < to; i++) {
+                    let j = i + offset;
+                    if (j >= total) j -= total;
+                    dst32[curve[j]] = src32[curve[i]];
+                }
+            }, signal);
+        } else {
+            await runSlices(total, (from, to) => {
+                for (let i = from; i < to; i++) {
+                    let j = i + offset;
+                    if (j >= total) j -= total;
+                    dst32[curve[i]] = src32[curve[j]];
+                }
+            }, signal);
+        }
+        return;
+    }
+
+    await runSlices(total, (from, to) => {
+        for (let i = from; i < to; i++) {
+            let j = i + offset;
+            if (j >= total) j -= total;
+
+            const fromPx = (isEncrypt ? curve[i] : curve[j]) << 2;
+            const toPx   = (isEncrypt ? curve[j] : curve[i]) << 2;
+
+            dstData[toPx]     = srcData[fromPx];
+            dstData[toPx + 1] = srcData[fromPx + 1];
+            dstData[toPx + 2] = srcData[fromPx + 2];
+            dstData[toPx + 3] = srcData[fromPx + 3];
+        }
+    }, signal);
+}
+
+/* =========================================================================
+ * 绿色通道调整
+ * ========================================================================= */
+function adjustGreenInPlace(data, enhance) {
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        if (g <= r && g <= b) continue;
+
+        const [h, s, l] = rgbToHsl(r, g, b);
+        if (s <= 8 || l <= 10 || l >= 90) continue;
+        if (h < 75 || h > 165) continue;
+
+        let newR, newG, newB;
+
+        if (enhance) {
+            const k = Math.min(s, 70) / 100;
+            const greenFactor   = 1.0 + k * 0.6;
+            const redBlueFactor = Math.max(0.7, 1.0 - k * 0.3);
+
+            newG = Math.min(255, Math.round(g * greenFactor));
+            newR = Math.max(0,   Math.round(r * redBlueFactor));
+            newB = Math.max(0,   Math.round(b * redBlueFactor));
+        } else {
+            const k = Math.min(s, 80) / 100;
+            const greenFactor   = Math.max(0.5, 1.0 - k * 0.5);
+            const redBlueFactor = Math.min(1.3, 1.0 + k * 0.3);
+
+            newG = Math.max(0,   Math.round(g * greenFactor));
+            newR = Math.min(255, Math.round(r * redBlueFactor));
+            newB = Math.min(255, Math.round(b * redBlueFactor));
+        }
+
+        data[i]     = newR;
+        data[i + 1] = newG;
+        data[i + 2] = newB;
+    }
+}
+
+function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const l = (max + min) / 2;
+
+    let h = 0, s = 0;
+
+    if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            default: h = (r - g) / d + 4;
+        }
+        h /= 6;
+    }
+
+    return [h * 360, s * 100, l * 100];
+}
+
+/* =========================================================================
+ * 图片 → Canvas
+ * ========================================================================= */
+function drawToCanvas(imgEl, sourceName) {
+    const name = sourceName || state.fileName || '未命名';
+
+    const width  = imgEl.naturalWidth  || imgEl.width;
+    const height = imgEl.naturalHeight || imgEl.height;
+
+    if (!width || !height) {
+        throw new Error(
+            '无法获取图片尺寸：naturalWidth / naturalHeight 为 0，图片可能未加载完成或已损坏'
+        );
+    }
+
+    if (width > MAX_IMAGE_SIDE || height > MAX_IMAGE_SIDE) {
+        throw new Error(
+            `图片尺寸 ${width}×${height} 超出单边上限 ${MAX_IMAGE_SIDE} 像素。` +
+            `请先缩小图片（当前文件：${name}）。`
+        );
+    }
+
+    const total = width * height;
+    if (total > MAX_IMAGE_PIXELS) {
+        throw new Error(
+            `图片总像素 ${total.toLocaleString()}（${width}×${height}）超出处理上限 ` +
+            `${MAX_IMAGE_PIXELS.toLocaleString()}。请先缩小图片（当前文件：${name}）。`
+        );
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width  = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    if (!ctx) {
+        throw new Error(
+            `无法创建 Canvas 2D 上下文（${width}×${height}）。` +
+            `浏览器可能不支持该尺寸或内存不足。`
+        );
+    }
+
+    try {
+        ctx.drawImage(imgEl, 0, 0, width, height);
+    } catch (e) {
+        throw new Error(
+            `drawImage 失败（目标 ${width}×${height}）: ${e && e.message ? e.message : e}`
+        );
+    }
+
+    if (canvas.width !== width || canvas.height !== height) {
+        throw new Error(
+            `Canvas 尺寸被浏览器重置：期望 ${width}×${height}，` +
+            `实际 ${canvas.width}×${canvas.height}。图片可能超出浏览器 Canvas 最大尺寸限制。`
+        );
+    }
+
+    return { canvas, ctx, width, height };
+}
+
+/* =========================================================================
+ * Canvas → Blob
+ * ========================================================================= */
+function canvasToBlob(canvas, format, quality) {
+    return new Promise((resolve, reject) => {
+        const isJpg = format === 'jpg';
+        const type  = isJpg ? 'image/jpeg' : 'image/png';
+
+        try {
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    resolve(blob);
+                } else {
+                    reject(new Error(
+                        `图片编码失败：toBlob 返回 null（类型 ${type}，` +
+                        `画布 ${canvas.width}×${canvas.height}` +
+                        `${isJpg ? `，质量 ${Math.round(quality * 100)}` : ''}）`
+                    ));
+                }
+            }, type, isJpg ? quality : undefined);
+        } catch (e) {
+            reject(new Error(`调用 canvas.toBlob 异常（类型 ${type}）: ${e && e.message ? e.message : e}`));
+        }
+    });
+}
+
+/* =========================================================================
+ * 核心处理流程
+ * ========================================================================= */
+async function transformToBlob(imgEl, mode, signal, sourceName, options) {
+    const isEncrypt = mode === 'encrypt';
+    const label = isEncrypt ? '混淆' : '解混淆';
+    const opt = options || {};
+
+    const useGreenEncrypt = opt.enableGreen !== undefined
+        ? !!opt.enableGreen : !!(enableGreen && enableGreen.checked);
+    const useGreenDecrypt = opt.reduceGreen !== undefined
+        ? !!opt.reduceGreen : !!(reduceGreen && reduceGreen.checked);
+    const strength = isEncrypt
+        ? (opt.encryptStrength !== undefined ? opt.encryptStrength : state.encryptStrength)
+        : (opt.decryptStrength !== undefined ? opt.decryptStrength : state.decryptStrength);
+    const format = opt.format || (formatSelect ? formatSelect.value : 'png');
+    const quality = opt.quality !== undefined
+        ? opt.quality
+        : (qualityRange ? parseInt(qualityRange.value, 10) / 100 : 0.95);
+
+    let stage = '准备';
+
+    await nextFrame();
+    if (signal && signal.aborted) throw abortError();
+
+    try {
+        stage = '读取图像并创建 Canvas';
+        const { canvas, ctx, width, height } = drawToCanvas(imgEl, sourceName);
+        const total = width * height;
+        const dims = `${width}×${height}（${total} 像素）`;
+
+        stage = `读取像素数据 ${dims}`;
+        let srcImage;
+        try {
+            srcImage = ctx.getImageData(0, 0, width, height);
+        } catch (e) {
+            throw new Error(
+                `getImageData 失败，Canvas 可能已被跨域图像污染: ${e && e.message ? e.message : e}`
+            );
+        }
+        const srcData = srcImage.data;
+
+        if (isEncrypt && useGreenEncrypt) {
+            stage = '绿色增强（混淆前置）';
+            adjustGreenInPlace(srcData, true);
+        }
+
+        const dstData = new Uint8ClampedArray(srcData.length);
+
+        stage = `构建 Gilbert 曲线 ${dims}`;
+        const curve = buildGilbertCurve(width, height);
+        if (curve.length !== total) {
+            throw new Error(`Gilbert 曲线长度异常：期望 ${total}，实际 ${curve.length}`);
+        }
+
+        const offset = normalizeOffset(Math.round(strength * GOLDEN * total), total);
+
+        stage = `像素置换（${label}，强度 ${strength}，偏移 ${offset}，共 ${total} 像素）`;
+        await permutePixels(srcData, dstData, curve, total, offset, isEncrypt, signal);
+
+        if (signal && signal.aborted) throw abortError();
+
+        if (!isEncrypt && useGreenDecrypt) {
+            stage = '绿色减弱（解混淆后置）';
+            adjustGreenInPlace(dstData, false);
+        }
+
+        stage = '写回 Canvas（putImageData）';
+        try {
+            ctx.putImageData(new ImageData(dstData, width, height), 0, 0);
+        } catch (e) {
+            throw new Error(`putImageData 失败: ${e && e.message ? e.message : e}`);
+        }
+
+        const isJpg = format === 'jpg';
+        stage = `编码输出（格式 ${format.toUpperCase()}` +
+                `${isJpg ? `，质量 ${Math.round(quality * 100)}` : ''}）`;
+        const blob = await canvasToBlob(canvas, format, quality);
+
+        if (signal && signal.aborted) throw abortError();
+
+        return {
+            blob,
+            width,
+            height,
+            format: isJpg ? 'jpg' : 'png'
+        };
+    } catch (e) {
+        if (e && e.name === 'AbortError') throw e;
+        const wrapped = new Error(
+            `在阶段「${stage}」失败：${e && e.message ? e.message : e}`
+        );
+        wrapped.cause = e;
+        wrapped.stage = stage;
+        throw wrapped;
+    }
+}
+
+/* =========================================================================
+ * 单图处理流程
+ * ========================================================================= */
+async function processTransform(imgEl, mode) {
+    if (state.isProcessing) {
+        recordError('当前有操作正在进行，请稍后重试');
+        return;
+    }
+
+    const isEncrypt = mode === 'encrypt';
+    const label = isEncrypt ? '混淆' : '解混淆';
+
+    state.isProcessing = true;
+    setButtonsDisabled(true);
+    showLoader();
+
+    const controller = new AbortController();
+    state.abortController = controller;
+
+    try {
+        const result = await transformToBlob(imgEl, mode, controller.signal, state.fileName);
+
+        if (controller.signal.aborted) throw abortError();
+
+        setImageSrc(URL.createObjectURL(result.blob));
+
+        state.lastOutputFormat = result.format;
+        if (isEncrypt) state.hasEncrypted = true;
+        else           state.hasDecrypted = true;
+
+        showRestoreButton();
+        updateDownloadButtonVisibility();
+        updateViewButtonVisibility();
+    } catch (err) {
+        if (err && err.name === 'AbortError') {
+            hideLoader();
+        } else {
+            recordError(`[${label}] 处理失败`, err);
+            hideLoader();
+        }
+    } finally {
+        state.isProcessing = false;
+        state.abortController = null;
+        setButtonsDisabled(false);
+    }
+}
+
+function cancelCurrentOperation() {
+    if (state.abortController) {
+        try { state.abortController.abort(); } catch { /* ignore */ }
+        state.abortController = null;
+    }
+}
+
+/* =========================================================================
+ * 批量 —— 状态与列表渲染
+ * ========================================================================= */
+const BATCH_STATUS_TEXT = {
+    pending: '待处理',
+    processing: '处理中…',
+    done: '已完成',
+    error: '失败'
+};
+
+function makeBatchItem(file) {
+    state.batchSeq += 1;
+    return {
+        id: state.batchSeq,
+        file,
+        name: file.name,
+        size: file.size,
+        status: 'pending',
+        mode: null,
+        blob: null,
+        url: null,
+        thumbUrl: null,
+        error: null,
+        outFormat: ''
+    };
+}
+
+function createBatchItemEl(item) {
+    const el = document.createElement('div');
+    el.className = 'batch-item';
+    el.dataset.id = String(item.id);
+
+    const thumb = document.createElement('img');
+    thumb.className = 'batch-thumb';
+    thumb.alt = '';
+    thumb.src = item.thumbUrl || '';
+
+    const info = document.createElement('div');
+    info.className = 'batch-info';
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'batch-name';
+    nameEl.textContent = item.name;
+    nameEl.title = item.name;
+
+    const meta = document.createElement('div');
+    meta.className = 'batch-meta';
+    meta.appendChild(document.createTextNode(formatBytes(item.size) + ' · '));
+
+    const statusEl = document.createElement('span');
+    statusEl.className = 'batch-status ' + item.status;
+    statusEl.textContent = BATCH_STATUS_TEXT[item.status] || '';
+    meta.appendChild(statusEl);
+
+    info.appendChild(nameEl);
+    info.appendChild(meta);
+
+    const actions = document.createElement('div');
+    actions.className = 'batch-item-actions';
+
+    el.appendChild(thumb);
+    el.appendChild(info);
+    el.appendChild(actions);
+
+    return el;
+}
+
+function refreshBatchItemEl(item) {
+    if (!batchListEl) return;
+    const el = batchListEl.querySelector(`[data-id="${item.id}"]`);
+    if (!el) return;
+
+    const statusEl = el.querySelector('.batch-status');
+    if (statusEl) {
+        statusEl.className = 'batch-status ' + item.status;
+        statusEl.textContent = BATCH_STATUS_TEXT[item.status] || '';
+    }
+
+    const actions = el.querySelector('.batch-item-actions');
+    if (actions) {
+        actions.textContent = '';
+
+        if (item.status === 'done' && item.url) {
+            const btn = document.createElement('button');
+            btn.className = 'mini-button';
+            btn.textContent = '下载';
+            btn.addEventListener('click', () => downloadBatchItem(item));
+            actions.appendChild(btn);
+        }
+
+        if (item.status === 'error' && item.error) {
+            const btn = document.createElement('button');
+            btn.className = 'mini-button';
+            btn.textContent = '详情';
+            btn.addEventListener('click', () => {
+                recordError(`处理失败：${item.name}`, item.error);
+            });
+            actions.appendChild(btn);
+        }
+    }
+}
+
+function addBatchItemEl(item) {
+    if (!batchListEl) return;
+    batchListEl.appendChild(createBatchItemEl(item));
+    refreshBatchItemEl(item);
+}
+
+function setBatchItemStatus(item, status) {
+    item.status = status;
+    refreshBatchItemEl(item);
+    updateBatchSummary();
+}
+
+function updateBatchSummary() {
+    if (!batchCountEl) return;
+    const n = state.batchFiles.length;
+    let done = 0, failed = 0;
+    for (const it of state.batchFiles) {
+        if (it.status === 'done') done++;
+        else if (it.status === 'error') failed++;
+    }
+    let text = `共 ${n} 个文件`;
+    if (done)   text += ` · 已完成 ${done}`;
+    if (failed) text += ` · 失败 ${failed}`;
+    batchCountEl.textContent = text;
+}
+
+function clearBatchList() {
+    if (state.batchProcessing) return;
+
+    for (const item of state.batchFiles) {
+        if (item.thumbUrl) { try { URL.revokeObjectURL(item.thumbUrl); } catch { /* ignore */ } }
+        if (item.url)      { try { URL.revokeObjectURL(item.url); } catch { /* ignore */ } }
+    }
+    state.batchFiles = [];
+    if (batchListEl) batchListEl.textContent = '';
+    updateBatchSummary();
+}
+
+function setBatchMode(on) {
+    state.batchMode = on;
+    if (batchPanel) batchPanel.classList.toggle('visible', on);
+    if (singlePanel) singlePanel.style.display = on ? 'none' : '';
+    document.body.classList.toggle('batch-mode', on);
+}
+
+/* =========================================================================
+ * 批量 —— 进度与按钮
+ * ========================================================================= */
+function showBatchProgress(show) {
+    if (batchProgressEl) batchProgressEl.classList.toggle('visible', show);
+    if (!show) {
+        if (batchProgressFill) batchProgressFill.style.width = '0%';
+        if (batchProgressText) batchProgressText.textContent = '';
+    }
+}
+
+function updateBatchProgress(current, total, text) {
+    if (batchProgressFill) {
+        batchProgressFill.style.width =
+            total > 0 ? (current / total * 100).toFixed(1) + '%' : '0%';
+    }
+    if (batchProgressText) {
+        batchProgressText.textContent =
+            `${current} / ${total}` + (text ? ` · ${text}` : '');
+    }
+}
+
+function setBatchControlsBusy(busy) {
+    [batchEncBtn, batchDecBtn, batchDlBtn, batchClearBtn].forEach((b) => {
+        if (b) b.classList.toggle('disabled', busy);
+    });
+    if (batchCancelBtn) batchCancelBtn.classList.toggle('visible', busy);
+}
+
+/* =========================================================================
+ * 批量 —— 文件 → Image 元素
+ * ========================================================================= */
+function loadImageElement(file) {
+    return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const el = new Image();
+
+        el.onload = () => resolve({ img: el, url });
+        el.onerror = () => {
+            try { URL.revokeObjectURL(url); } catch { /* ignore */ }
+            reject(new Error(`图片解码失败：${file.name}`));
+        };
+
+        el.src = url;
+    });
+}
+
+/* =========================================================================
+ * 批量 —— 主流程
+ * ========================================================================= */
+async function runBatch(mode) {
+    if (state.batchProcessing) return;
+    if (!state.batchFiles.length) {
+        recordError('批量列表为空，请先选择图片');
+        return;
+    }
+
+    const isEncrypt = mode === 'encrypt';
+    const label = isEncrypt ? '批量混淆' : '批量解混淆';
+    const total = state.batchFiles.length;
+
+    const settings = {
+        encryptStrength: state.encryptStrength,
+        decryptStrength: state.decryptStrength,
+        enableGreen: !!(enableGreen && enableGreen.checked),
+        reduceGreen: !!(reduceGreen && reduceGreen.checked),
+        format: formatSelect ? formatSelect.value : 'png',
+        quality: qualityRange ? parseInt(qualityRange.value, 10) / 100 : 0.95
+    };
+
+    state.batchProcessing = true;
+    const controller = new AbortController();
+    state.abortController = controller;
+    const signal = controller.signal;
+
+    showLoader();
+    setBatchControlsBusy(true);
+    showBatchProgress(true);
+    updateBatchProgress(0, total, '准备中');
+
+    let done = 0;
+    let failed = 0;
+    let cancelled = false;
+
+    try {
+        for (let i = 0; i < total; i++) {
+            if (signal.aborted) { cancelled = true; break; }
+
+            const item = state.batchFiles[i];
+            if (!item) { cancelled = true; break; }
+
+            updateBatchProgress(i, total, item.name);
+            setBatchItemStatus(item, 'processing');
+
+            if (item.url) { try { URL.revokeObjectURL(item.url); } catch { /* ignore */ } }
+            item.url = null;
+            item.blob = null;
+            item.error = null;
+            item.outFormat = '';
+            refreshBatchItemEl(item);
+
+            let loaded = null;
+            try {
+                loaded = await loadImageElement(item.file);
+
+                const result = await transformToBlob(
+                    loaded.img, mode, signal, item.name, settings
+                );
+
+                if (signal.aborted) throw abortError();
+
+                item.blob = result.blob;
+                item.url = URL.createObjectURL(result.blob);
+                item.mode = mode;
+                item.outFormat = result.format;
+                setBatchItemStatus(item, 'done');
+                done++;
+            } catch (e) {
+                if (e && e.name === 'AbortError') {
+                    setBatchItemStatus(item, 'pending');
+                    cancelled = true;
+                    break;
+                }
+                item.error = e;
+                setBatchItemStatus(item, 'error');
+                failed++;
+                recordError(`[${label}] 处理失败：${item.name}`, e, { popup: false });
+            } finally {
+                if (loaded) {
+                    try { loaded.img.onload = loaded.img.onerror = null; } catch { /* ignore */ }
+                    try { loaded.img.removeAttribute('src'); } catch { /* ignore */ }
+                    try { URL.revokeObjectURL(loaded.url); } catch { /* ignore */ }
+                }
+            }
+
+            updateBatchProgress(i + 1, total, '');
+            await nextFrame();
+        }
+    } finally {
+        state.batchProcessing = false;
+        state.abortController = null;
+        hideLoader();
+        setBatchControlsBusy(false);
+        showBatchProgress(false);
+        updateBatchSummary();
+
+        if (cancelled) {
+            recordError(`[${label}] 已取消（成功 ${done} 个）`, null, { popup: false });
+        } else if (failed > 0) {
+            recordError(
+                `[${label}] 完成：成功 ${done} 个，失败 ${failed} 个`,
+                null,
+                { popup: true }
+            );
+        }
+    }
+}
+
+/* =========================================================================
+ * 批量 —— 下载（单项 / 打包 ZIP）
+ * ========================================================================= */
+function triggerDownload(url, filename) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+}
+
+function downloadBatchItem(item) {
+    if (!item || !item.url) return;
+
+    const ext = item.outFormat || (formatSelect && formatSelect.value === 'jpg' ? 'jpg' : 'png');
+    const prefix = item.mode === 'encrypt' ? 'encrypted_' : 'decrypted_';
+    const base = (item.name || 'image').replace(/\.[^/.]+$/, '') || 'image';
+
+    try {
+        triggerDownload(item.url, `${prefix}${base}.${ext}`);
+    } catch (e) {
+        recordError('下载失败', e);
+    }
+}
+
+/* —— 极简 ZIP —— */
+const CRC_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let k = 0; k < 8; k++) {
+            c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        }
+        t[i] = c >>> 0;
+    }
+    return t;
+})();
+
+function crc32(bytes) {
+    let c = 0xFFFFFFFF;
+    for (let i = 0; i < bytes.length; i++) {
+        c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    }
+    return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+function createZipBlob(entries) {
+    const encoder = new TextEncoder();
+    const chunks = [];
+    const central = [];
+    let offset = 0;
+
+    const now = new Date();
+    const dosTime = ((now.getHours() << 11) |
+                     (now.getMinutes() << 5) |
+                     (Math.floor(now.getSeconds() / 2))) & 0xFFFF;
+    const dosDate = (((now.getFullYear() - 1980) << 9) |
+                     ((now.getMonth() + 1) << 5) |
+                     now.getDate()) & 0xFFFF;
+
+    for (const entry of entries) {
+        const nameBytes = encoder.encode(entry.name);
+        const data = entry.data;
+        const size = data.length;
+        const crc = crc32(data);
+
+        const local = new Uint8Array(30 + nameBytes.length);
+        const lv = new DataView(local.buffer);
+        lv.setUint32(0, 0x04034b50, true);
+        lv.setUint16(4, 20, true);
+        lv.setUint16(6, 0x0800, true);
+        lv.setUint16(8, 0, true);
+        lv.setUint16(10, dosTime, true);
+        lv.setUint16(12, dosDate, true);
+        lv.setUint32(14, crc, true);
+        lv.setUint32(18, size, true);
+        lv.setUint32(22, size, true);
+        lv.setUint16(26, nameBytes.length, true);
+        lv.setUint16(28, 0, true);
+        local.set(nameBytes, 30);
+
+        chunks.push(local, data);
+
+        const cd = new Uint8Array(46 + nameBytes.length);
+        const cv = new DataView(cd.buffer);
+        cv.setUint32(0, 0x02014b50, true);
+        cv.setUint16(4, 20, true);
+        cv.setUint16(6, 20, true);
+        cv.setUint16(8, 0x0800, true);
+        cv.setUint16(10, 0, true);
+        cv.setUint16(12, dosTime, true);
+        cv.setUint16(14, dosDate, true);
+        cv.setUint32(16, crc, true);
+        cv.setUint32(20, size, true);
+        cv.setUint32(24, size, true);
+        cv.setUint16(28, nameBytes.length, true);
+        cv.setUint16(30, 0, true);
+        cv.setUint16(32, 0, true);
+        cv.setUint16(34, 0, true);
+        cv.setUint16(36, 0, true);
+        cv.setUint32(38, 0, true);
+        cv.setUint32(42, offset, true);
+        cd.set(nameBytes, 46);
+        central.push(cd);
+
+        offset += local.length + size;
+    }
+
+    let centralSize = 0;
+    for (const c of central) centralSize += c.length;
+
+    const eocd = new Uint8Array(22);
+    const ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true);
+    ev.setUint16(4, 0, true);
+    ev.setUint16(6, 0, true);
+    ev.setUint16(8, entries.length, true);
+    ev.setUint16(10, entries.length, true);
+    ev.setUint32(12, centralSize, true);
+    ev.setUint32(16, offset, true);
+    ev.setUint16(20, 0, true);
+
+    return new Blob([...chunks, ...central, eocd], { type: 'application/zip' });
+}
+
+async function downloadBatch() {
+    if (state.batchProcessing) return;
+
+    const doneItems = state.batchFiles.filter((it) => it.status === 'done' && it.blob);
+    if (!doneItems.length) {
+        recordError('没有可下载的处理结果');
+        return;
+    }
+
+    const ts = Date.now();
+    showLoader();
+
+    try {
+        const entries = [];
+        const used = new Set();
+
+        for (const it of doneItems) {
+            const ext = it.outFormat || 'png';
+            const prefix = it.mode === 'encrypt' ? 'encrypted_' : 'decrypted_';
+            const base = (it.name || 'image').replace(/\.[^/.]+$/, '') || 'image';
+
+            let name = `${prefix}${base}.${ext}`;
+            let n = 1;
+            while (used.has(name)) {
+                name = `${prefix}${base}_${n++}.${ext}`;
+            }
+            used.add(name);
+
+            const buf = new Uint8Array(await it.blob.arrayBuffer());
+            entries.push({ name, data: buf });
+        }
+
+        const zipBlob = createZipBlob(entries);
+        const zipUrl = URL.createObjectURL(zipBlob);
+
+        triggerDownload(zipUrl, `batch_${ts}.zip`);
+        setTimeout(() => { try { URL.revokeObjectURL(zipUrl); } catch { /* ignore */ } }, 60000);
+    } catch (e) {
+        recordError('打包下载失败', e);
+    } finally {
+        hideLoader();
+    }
+}
+
+/* =========================================================================
+ * 单图 —— 下载 / 查看 / 清除
+ * ========================================================================= */
+function getDownloadFileName() {
+    const ext = state.lastOutputFormat ||
+        (formatSelect && formatSelect.value === 'jpg' ? 'jpg' : 'png');
+
+    const prefix = state.hasEncrypted ? 'encrypted_'
+                 : state.hasDecrypted ? 'decrypted_'
+                 : 'image_';
+    const ts = Date.now();
+
+    if (state.fileName) {
+        const base = state.fileName.replace(/\.[^/.]+$/, '');
+        return `${prefix}${base}_${ts}.${ext}`;
+    }
+    return `${prefix}${ts}.${ext}`;
+}
+
+function downloadImage() {
+    if (!img || !img.src) {
+        recordError('下载失败：当前没有可下载的图片');
+        return;
+    }
+    try {
+        triggerDownload(img.src, getDownloadFileName());
+    } catch (err) {
+        recordError('下载图片时出错', err);
+    }
+}
+
+function viewImage() {
+    if (!img || !img.src) {
+        recordError('查看失败：当前没有可查看的图片');
+        return;
+    }
+    try {
+        window.open(img.src, '_blank');
+    } catch (err) {
+        recordError('查看图片时出错', err);
+    }
+}
+
+function clearSingleImage() {
+    if (img) {
+        img.onload = img.onerror = null;
+        img.removeAttribute('src');
+        img.style.display = 'none';
+    }
+
+    releaseCurrentBlobUrl();
+
+    state.hasImage = false;
+    state.hasEncrypted = false;
+    state.hasDecrypted = false;
+    state.fileName = '';
+    state.originalFile = null;
+    state.lastOutputFormat = '';
+
+    resetButtonStates();
+    if (clearBtn)    clearBtn.style.display = 'none';
+    if (downloadBtn) downloadBtn.style.display = 'none';
+    if (viewBtn)     viewBtn.style.display = 'none';
+
+    updateTransformAvailability();
+}
+
+function clearImage() {
+    cancelCurrentOperation();
+
+    clearSingleImage();
+    if (!state.batchProcessing) {
+        clearBatchList();
+        setBatchMode(false);
+    }
+
+    if (ipt) ipt.value = '';
+}
+
+/* =========================================================================
+ * 文件选择
+ * ========================================================================= */
+let fileSelectionToken = 0;
+
+async function handleSingleFile(file) {
+    const verdict = await validateImageFile(file);
+
+    if (verdict.fatal) {
+        recordError(verdict.message, verdict.error);
+        return;
+    }
+
+    for (const w of verdict.warnings || []) {
+        recordError(`[格式警告] ${w}`, null, { popup: false });
+    }
+
+    if (state.batchMode) {
+        clearBatchList();
+        setBatchMode(false);
+    }
+
+    resetButtonStates();
+    releaseCurrentBlobUrl();
+
+    if (img) img.style.display = 'none';
+
+    state.hasImage = true;
+    state.fileName = file.name;
+    state.originalFile = file;
+    state.lastOutputFormat = '';
+
+    setImageSrc(URL.createObjectURL(file));
+
+    updateTransformAvailability();
+
+    if (clearBtn)    clearBtn.style.display = 'flex';
+    if (downloadBtn) downloadBtn.style.display = 'none';
+    if (viewBtn)     viewBtn.style.display = 'none';
+}
+
+async function handleBatchFiles(files) {
+    const remaining = MAX_BATCH_FILES - state.batchFiles.length;
+    if (remaining <= 0) {
+        recordError(`批量列表已满（上限 ${MAX_BATCH_FILES} 个文件）`);
+        return;
+    }
+
+    let list = files;
+    if (list.length > remaining) {
+        recordError(
+            `批量列表最多 ${MAX_BATCH_FILES} 个文件，本次仅添加前 ${remaining} 个`,
+            null,
+            { popup: false }
+        );
+        list = list.slice(0, remaining);
+    }
+
+    const added = [];
+    let skipped = 0;
+
+    for (const file of list) {
+        try {
+            const verdict = await validateImageFile(file);
+
+            if (verdict.fatal) {
+                skipped++;
+                recordError(`[跳过] ${verdict.message}`, verdict.error, { popup: false });
+                continue;
+            }
+
+            for (const w of verdict.warnings || []) {
+                recordError(`[格式警告] ${w}`, null, { popup: false });
+            }
+
+            const item = makeBatchItem(file);
+            item.thumbUrl = URL.createObjectURL(file);
+            added.push(item);
+        } catch (e) {
+            skipped++;
+            recordError(`[跳过] 校验 ${file.name} 时出错`, e, { popup: false });
+        }
+    }
+
+    if (!added.length) {
+        recordError('没有可添加的图片文件');
+        return;
+    }
+
+    if (!state.batchMode) {
+        clearSingleImage();
+        setBatchMode(true);
+    }
+
+    for (const item of added) {
+        state.batchFiles.push(item);
+        addBatchItemEl(item);
+    }
+    updateBatchSummary();
+
+    if (skipped > 0) {
+        recordError(
+            `[批量选择] 已跳过 ${skipped} 个文件（格式不受支持或校验失败）`,
+            null,
+            { popup: true }
+        );
+    }
+}
+
+async function handleFilesSelected(files) {
+    const token = ++fileSelectionToken;
+
+    if (!files || !files.length) return;
+
+    if (state.isProcessing || state.batchProcessing) {
+        recordError('当前有操作正在进行，无法选择新图片');
+        return;
+    }
+
+    try {
+        if (files.length === 1) {
+            await handleSingleFile(files[0]);
+        } else {
+            await handleBatchFiles(files);
+        }
+    } catch (e) {
+        recordError('处理文件选择时发生未预期异常', e);
+    }
+
+    if (token !== fileSelectionToken) return;
+}
+
+if (ipt) {
+    ipt.addEventListener('change', () => {
+        const files = Array.from(ipt.files || []);
+        ipt.value = '';
+        handleFilesSelected(files);
+    });
+}
+
+/* =========================================================================
+ * 桌面端增强：拖放 / Ctrl+O
+ * ========================================================================= */
+const isFileDrag = (e) =>
+    !!e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files');
+
+let dragDepth = 0;
+
+function setDropOverlay(show) {
+    if (dropOverlay) dropOverlay.classList.toggle('visible', show);
+}
+
+document.addEventListener('dragenter', (e) => {
+    if (!isFileDrag(e)) return;
+    e.preventDefault();
+    dragDepth++;
+    setDropOverlay(true);
+});
+
+document.addEventListener('dragover', (e) => {
+    if (!isFileDrag(e)) return;
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+});
+
+document.addEventListener('dragleave', (e) => {
+    if (!isFileDrag(e)) return;
+    dragDepth = Math.max(0, dragDepth - 1);
+    if (dragDepth === 0) setDropOverlay(false);
+});
+
+document.addEventListener('drop', (e) => {
+    if (!isFileDrag(e)) return;
+    e.preventDefault();
+    dragDepth = 0;
+    setDropOverlay(false);
+
+    const files = Array.from(e.dataTransfer.files || []);
+    if (files.length) handleFilesSelected(files);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (!(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey) return;
+    if (String(e.key || '').toLowerCase() !== 'o') return;
+    if (!ipt) return;
+    e.preventDefault();
+    ipt.click();
+});
+
+/* =========================================================================
+ * 事件绑定 —— 单图
+ * ========================================================================= */
+function bindTransformButton(button, mode) {
+    if (!button) return;
+    button.addEventListener('click', () => {
+        if (state.isProcessing || state.batchProcessing) return;
+        if (!img || !img.src) {
+            recordError(`无法${mode === 'encrypt' ? '混淆' : '解混淆'}：请先选择图片`);
+            return;
+        }
+        processTransform(img, mode);
+    });
+}
+
+bindTransformButton(encBtn, 'encrypt');
+bindTransformButton(decBtn, 'decrypt');
+
+if (restoreBtn) {
+    restoreBtn.addEventListener('click', () => {
+        if (state.isProcessing || state.batchProcessing) {
+            recordError('当前有操作正在进行，无法还原图片');
+            return;
+        }
+        if (!state.originalFile) {
+            recordError('无法还原原图：未找到原始文件');
+            return;
+        }
+
+        resetButtonStates();
+        releaseCurrentBlobUrl();
+
+        if (img) img.style.display = 'none';
+
+        state.hasImage = true;
+        state.lastOutputFormat = '';
+
+        setImageSrc(URL.createObjectURL(state.originalFile));
+
+        updateTransformAvailability();
+
+        if (downloadBtn) downloadBtn.style.display = 'none';
+        if (viewBtn)     viewBtn.style.display = 'none';
+    });
+}
+
+if (downloadBtn) downloadBtn.addEventListener('click', downloadImage);
+if (viewBtn)     viewBtn.addEventListener('click', viewImage);
+if (clearBtn)    clearBtn.addEventListener('click', clearImage);
+
+/* =========================================================================
+ * 事件绑定 —— 批量
+ * ========================================================================= */
+if (batchEncBtn) {
+    batchEncBtn.addEventListener('click', () => {
+        if (state.batchProcessing) return;
+        runBatch('encrypt');
+    });
+}
+
+if (batchDecBtn) {
+    batchDecBtn.addEventListener('click', () => {
+        if (state.batchProcessing) return;
+        runBatch('decrypt');
+    });
+}
+
+if (batchDlBtn) {
+    batchDlBtn.addEventListener('click', () => {
+        if (state.batchProcessing) return;
+        downloadBatch();
+    });
+}
+
+if (batchClearBtn) {
+    batchClearBtn.addEventListener('click', () => {
+        if (state.batchProcessing) {
+            recordError('处理进行中，无法清空批量列表');
+            return;
+        }
+        clearBatchList();
+        setBatchMode(false);
+    });
+}
+
+if (batchCancelBtn) {
+    batchCancelBtn.addEventListener('click', () => {
+        if (!state.batchProcessing) return;
+        cancelCurrentOperation();
+    });
+}
+
+/* =========================================================================
+ * 输出格式（自绘下拉）
+ * ========================================================================= */
+function initFormatSelect() {
+    const root    = $('format-select-wrap');
+    const native  = $('format-select');
+    const trigger = $('format-trigger');
+    const menu    = $('format-menu');
+    if (!root || !native || !trigger || !menu) return;
+
+    const options = Array.from(menu.querySelectorAll('.select-option'));
+    const valueEl = trigger.querySelector('.select-value');
+    if (!options.length || !valueEl) return;
+
+    let activeIndex = 0;
+
+    const isOpen = () => root.classList.contains('open');
+
+    function syncFromNative() {
+        const current = native.value;
+        let label = '';
+
+        options.forEach((opt) => {
+            const selected = opt.dataset.value === current;
+            opt.classList.toggle('selected', selected);
+            opt.setAttribute('aria-selected', selected ? 'true' : 'false');
+            if (selected) {
+                const span = opt.querySelector('.select-option-label');
+                label = span ? span.textContent : opt.textContent;
+            }
+        });
+
+        valueEl.textContent = label || current;
+        activeIndex = Math.max(0, options.findIndex((o) => o.dataset.value === current));
+    }
+
+    function highlight(index) {
+        if (!options.length) return;
+        activeIndex = ((index % options.length) + options.length) % options.length;
+        options.forEach((opt, i) => opt.classList.toggle('active', i === activeIndex));
+        const el = options[activeIndex];
+        if (el && el.id) trigger.setAttribute('aria-activedescendant', el.id);
+    }
+
+    function clearHighlight() {
+        options.forEach((opt) => opt.classList.remove('active'));
+        trigger.removeAttribute('aria-activedescendant');
+    }
+
+    function onDocumentPointerDown(e) {
+        if (!root.contains(e.target)) close(false);
+    }
+
+    function open() {
+        if (isOpen()) return;
+        root.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+        highlight(activeIndex);
+        document.addEventListener('pointerdown', onDocumentPointerDown, true);
+    }
+
+    function close(focusTrigger) {
+        if (!isOpen()) return;
+        root.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        clearHighlight();
+        document.removeEventListener('pointerdown', onDocumentPointerDown, true);
+        if (focusTrigger) trigger.focus();
+    }
+
+    function commit(value) {
+        if (native.value !== value) {
+            native.value = value;
+            native.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        syncFromNative();
+    }
+
+    trigger.addEventListener('click', () => {
+        if (isOpen()) close(false);
+        else open();
+    });
+
+    trigger.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                if (isOpen()) highlight(activeIndex + 1);
+                else open();
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                if (isOpen()) highlight(activeIndex - 1);
+                else open();
+                break;
+            case 'Home':
+                if (isOpen()) { e.preventDefault(); highlight(0); }
+                break;
+            case 'End':
+                if (isOpen()) { e.preventDefault(); highlight(options.length - 1); }
+                break;
+            case 'Enter':
+            case ' ':
+                e.preventDefault();
+                if (isOpen()) {
+                    commit(options[activeIndex].dataset.value);
+                    close(true);
+                } else {
+                    open();
+                }
+                break;
+            case 'Escape':
+                if (isOpen()) { e.preventDefault(); close(true); }
+                break;
+            case 'Tab':
+                if (isOpen()) close(false);
+                break;
+        }
+    });
+
+    options.forEach((opt, i) => {
+        opt.addEventListener('click', () => {
+            commit(opt.dataset.value);
+            close(true);
+        });
+        opt.addEventListener('pointerenter', () => {
+            if (isOpen()) highlight(i);
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen()) close(false);
+    });
+
+    syncFromNative();
+}
+
+/* 原生 select 的 change 事件仍用于驱动质量选项显隐 */
+if (formatSelect) {
+    formatSelect.addEventListener('change', function () {
+        if (qualityOption) {
+            qualityOption.style.display = this.value === 'jpg' ? 'block' : 'none';
+        }
+    });
+}
+
+/* =========================================================================
+ * 质量滑块
+ * ========================================================================= */
+if (qualityRange) {
+    const syncQualityRangeFill = function () {
+        const min = Number(qualityRange.min) || 0;
+        const max = Number(qualityRange.max) || 100;
+        const value = Number(qualityRange.value) || 0;
+        const ratio = max > min ? (value - min) / (max - min) : 0;
+        qualityRange.style.setProperty('--range-progress', (ratio * 100).toFixed(2) + '%');
+    };
+
+    if (qualityValue) qualityValue.textContent = qualityRange.value;
+    qualityRange.addEventListener('input', function () {
+        if (qualityValue) qualityValue.textContent = this.value;
+        syncQualityRangeFill();
+    });
+    syncQualityRangeFill();
+}
+
+/* =========================================================================
+ * 强度按钮
+ * ========================================================================= */
+function initStrengthButtons() {
+    const encButtons = document.querySelectorAll('.encrypt-strength-button');
+    encButtons.forEach((btn) => {
+        btn.addEventListener('click', function () {
+            state.encryptStrength = parseFloat(this.dataset.value) || 0;
+            encButtons.forEach((b) => b.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+
+    const decButtons = document.querySelectorAll('.decrypt-strength-button');
+    decButtons.forEach((btn) => {
+        btn.addEventListener('click', function () {
+            state.decryptStrength = parseFloat(this.dataset.value) || 0;
+            decButtons.forEach((b) => b.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+}
+
+/* =========================================================================
+ * 错误窗口
+ * ========================================================================= */
+if (errorCloseBtn)  errorCloseBtn.addEventListener('click', closeErrorWindow);
+if (errorOkBtn)     errorOkBtn.addEventListener('click', closeErrorWindow);
+
+if (errorOverlay) {
+    errorOverlay.addEventListener('click', (e) => {
+        if (e.target === errorOverlay) closeErrorWindow();
+    });
+}
+
+/* =========================================================================
+ * 全局错误捕获
+ * ========================================================================= */
+window.addEventListener('error', (event) => {
+    const location = event.filename
+        ? `${event.filename}:${event.lineno}:${event.colno}`
+        : '未知位置';
+    recordError(
+        `全局错误: ${event.message || '(无消息)'} @ ${location}`,
+        event.error
+    );
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+    event.preventDefault();
+    const reason = event.reason;
+    if (reason && reason.name === 'AbortError') return;
+    recordError('未处理的 Promise 拒绝', reason);
+});
+
+/* =========================================================================
+ * 页面卸载
+ * ========================================================================= */
+window.addEventListener('beforeunload', (event) => {
+    const busy = state.isProcessing || state.batchProcessing;
+
+    cancelCurrentOperation();
+    releaseCurrentBlobUrl();
+
+    if (busy) {
+        event.preventDefault();
+        event.returnValue = '图片处理正在进行中，确定要离开吗？';
+    }
+});
+
+/* =========================================================================
+ * 初始化
+ * ========================================================================= */
+initFormatSelect();
+initStrengthButtons();
+resetButtonStates();
+setBatchMode(false);
+updateBatchSummary();
+updateTransformAvailability();
+
+if (formatSelect && qualityOption) {
+    qualityOption.style.display = formatSelect.value === 'jpg' ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
